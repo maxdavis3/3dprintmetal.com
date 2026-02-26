@@ -80,7 +80,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     var target = parseInt(el.getAttribute('data-count'), 10);
                     var suffix = el.textContent.replace(/[0-9]/g, '');
                     var duration = 2000;
-                    var start = 0;
                     var startTime = null;
 
                     function animate(timestamp) {
@@ -156,4 +155,125 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // RSS News Feed
+    var newsGrid = document.getElementById('newsGrid');
+    if (newsGrid) {
+        loadNewsFeed(newsGrid);
+    }
+
 });
+
+// RSS Feed loader
+function loadNewsFeed(container) {
+    var feeds = [
+        { url: 'https://3dprint.com/feed/', name: '3DPrint.com' },
+        { url: 'https://3dprintingindustry.com/feed/', name: '3D Printing Industry' },
+        { url: 'https://all3dp.com/feed/', name: 'All3DP' },
+        { url: 'https://www.metal-am.com/feed/', name: 'Metal AM' },
+        { url: 'https://www.tctmagazine.com/feed/', name: 'TCT Magazine' },
+        { url: 'https://www.fabbaloo.com/feed', name: 'Fabbaloo' },
+        { url: 'https://3dnatives.com/en/feed/', name: '3Dnatives' }
+    ];
+
+    var rss2jsonBase = 'https://api.rss2json.com/v1/api.json?rss_url=';
+    var allArticles = [];
+    var feedsLoaded = 0;
+    var feedsTotal = feeds.length;
+
+    feeds.forEach(function(feed) {
+        fetch(rss2jsonBase + encodeURIComponent(feed.url))
+            .then(function(res) { return res.json(); })
+            .then(function(data) {
+                if (data.status === 'ok' && data.items) {
+                    data.items.forEach(function(item) {
+                        allArticles.push({
+                            title: item.title,
+                            link: item.link,
+                            description: stripHtml(item.description).substring(0, 150) + '...',
+                            pubDate: item.pubDate,
+                            thumbnail: item.thumbnail || item.enclosure && item.enclosure.link || '',
+                            source: feed.name
+                        });
+                    });
+                }
+            })
+            .catch(function() {
+                // silently skip failed feeds
+            })
+            .finally(function() {
+                feedsLoaded++;
+                if (feedsLoaded === feedsTotal) {
+                    renderNews(container, allArticles);
+                }
+            });
+    });
+}
+
+function stripHtml(html) {
+    var tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    return tmp.textContent || tmp.innerText || '';
+}
+
+function renderNews(container, articles) {
+    if (articles.length === 0) {
+        container.innerHTML = '<div class="news-error"><p>Unable to load news feeds at this time.</p><a href="https://3dprintingindustry.com" target="_blank" rel="noopener" class="btn btn-outline">Visit 3D Printing Industry</a></div>';
+        return;
+    }
+
+    // Sort by date (newest first) and take top 6
+    articles.sort(function(a, b) {
+        return new Date(b.pubDate) - new Date(a.pubDate);
+    });
+    var top = articles.slice(0, 6);
+
+    var html = '';
+    top.forEach(function(article) {
+        var date = new Date(article.pubDate);
+        var dateStr = date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        var imageHtml = article.thumbnail
+            ? '<img src="' + article.thumbnail + '" alt="" loading="lazy" onerror="this.parentElement.innerHTML=\'<div class=news-placeholder>&#9881;</div>\'">'
+            : '<div class="news-placeholder">&#9881;</div>';
+
+        html += '<div class="news-card animate-in">' +
+            '<div class="news-card-image">' + imageHtml + '</div>' +
+            '<div class="news-card-body">' +
+                '<div class="news-card-source">' + escapeHtml(article.source) + '</div>' +
+                '<h3>' + escapeHtml(article.title) + '</h3>' +
+                '<p>' + escapeHtml(article.description) + '</p>' +
+                '<div class="news-card-date">' + dateStr + '</div>' +
+            '</div>' +
+        '</div>';
+    });
+
+    container.innerHTML = html;
+
+    // Re-observe new elements for animation
+    var newCards = container.querySelectorAll('.animate-in');
+    if (newCards.length > 0 && 'IntersectionObserver' in window) {
+        var obs = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        newCards.forEach(function(el) { obs.observe(el); });
+    }
+
+    // Make entire card clickable
+    var cards = container.querySelectorAll('.news-card');
+    cards.forEach(function(card, i) {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', function() {
+            window.open(top[i].link, '_blank', 'noopener');
+        });
+    });
+}
+
+function escapeHtml(str) {
+    var div = document.createElement('div');
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+}
