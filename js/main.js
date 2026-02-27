@@ -165,14 +165,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // RSS Feed loader
 function loadNewsFeed(container) {
+    // 6 Google News RSS searches targeting metal 3D printing specifically
     var feeds = [
-        { url: 'https://3dprint.com/feed/', name: '3DPrint.com' },
-        { url: 'https://3dprintingindustry.com/feed/', name: '3D Printing Industry' },
-        { url: 'https://all3dp.com/feed/', name: 'All3DP' },
-        { url: 'https://www.metal-am.com/feed/', name: 'Metal AM' },
-        { url: 'https://www.tctmagazine.com/feed/', name: 'TCT Magazine' },
-        { url: 'https://www.fabbaloo.com/feed', name: 'Fabbaloo' },
-        { url: 'https://3dnatives.com/en/feed/', name: '3Dnatives' }
+        { url: 'https://news.google.com/rss/search?q=metal+3d+printing+additive+manufacturing&hl=en-US&gl=US&ceid=US:en', name: 'Google News' },
+        { url: 'https://news.google.com/rss/search?q=DMLS+SLM+metal+printing&hl=en-US&gl=US&ceid=US:en', name: 'Google News' },
+        { url: 'https://news.google.com/rss/search?q=metal+powder+bed+fusion+aerospace&hl=en-US&gl=US&ceid=US:en', name: 'Google News' },
+        { url: 'https://news.google.com/rss/search?q=metal+additive+manufacturing+titanium+inconel&hl=en-US&gl=US&ceid=US:en', name: 'Google News' },
+        { url: 'https://www.metal-am.com/feed/', name: 'Metal AM Magazine' },
+        { url: 'https://3dprintingindustry.com/feed/', name: '3D Printing Industry' }
     ];
 
     var rss2jsonBase = 'https://api.rss2json.com/v1/api.json?rss_url=';
@@ -180,10 +180,24 @@ function loadNewsFeed(container) {
     var feedsLoaded = 0;
     var feedsTotal = feeds.length;
 
+    // Timeout: show fallback if feeds don't all load within 8 seconds
+    var timeout = setTimeout(function() {
+        if (feedsLoaded < feedsTotal) {
+            renderNews(container, allArticles);
+        }
+    }, 8000);
+
     feeds.forEach(function(feed) {
-        fetch(rss2jsonBase + encodeURIComponent(feed.url))
+        var controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+        var fetchOptions = controller ? { signal: controller.signal } : {};
+        var feedTimeout = setTimeout(function() {
+            if (controller) controller.abort();
+        }, 6000);
+
+        fetch(rss2jsonBase + encodeURIComponent(feed.url), fetchOptions)
             .then(function(res) { return res.json(); })
             .then(function(data) {
+                clearTimeout(feedTimeout);
                 if (data.status === 'ok' && data.items) {
                     data.items.forEach(function(item) {
                         allArticles.push({
@@ -191,18 +205,19 @@ function loadNewsFeed(container) {
                             link: item.link,
                             description: stripHtml(item.description).substring(0, 150) + '...',
                             pubDate: item.pubDate,
-                            thumbnail: item.thumbnail || item.enclosure && item.enclosure.link || '',
+                            thumbnail: item.thumbnail || (item.enclosure && item.enclosure.link) || '',
                             source: feed.name
                         });
                     });
                 }
             })
             .catch(function() {
-                // silently skip failed feeds
+                clearTimeout(feedTimeout);
             })
-            .finally(function() {
+            .then(function() {
                 feedsLoaded++;
                 if (feedsLoaded === feedsTotal) {
+                    clearTimeout(timeout);
                     renderNews(container, allArticles);
                 }
             });
