@@ -243,6 +243,26 @@
                 </div>
             </div>
         </section>
+        <section class="newsletter-section" style="background:#0d0d0d;padding:3rem 2rem;text-align:center;border-top:1px solid #1a1a1a;">
+            <div style="max-width:520px;margin:0 auto;">
+                <span style="font-size:0.7rem;letter-spacing:0.15em;color:#666;text-transform:uppercase;">Stay Informed</span>
+                <h2 style="color:#fff;font-size:1.6rem;margin:0.5rem 0 0.75rem;">Industry Updates to Your Inbox</h2>
+                <p style="color:#888;font-size:0.9rem;margin-bottom:1.5rem;">New techniques, material breakthroughs, and industry news — delivered monthly. No spam.</p>
+                <form action="https://api.web3forms.com/submit" method="POST"
+                      style="display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center;"
+                      onsubmit="this.querySelector('button').textContent='Subscribed!';this.querySelector('button').disabled=true;">
+                    <input type="hidden" name="access_key" value="6f33053b-6d08-414b-9615-665f88c98da8">
+                    <input type="hidden" name="subject" value="Newsletter Signup">
+                    <input type="hidden" name="from_name" value="Newsletter Signup">
+                    <input type="email" name="email" placeholder="your@email.com" required
+                           style="flex:1;min-width:220px;padding:0.7rem 1rem;background:#111;border:1px solid #333;color:#fff;border-radius:4px;font-size:0.95rem;">
+                    <button type="submit"
+                            style="padding:0.7rem 1.5rem;background:#fff;color:#000;border:none;border-radius:4px;font-weight:600;font-size:0.95rem;cursor:pointer;white-space:nowrap;">
+                        Subscribe
+                    </button>
+                </form>
+            </div>
+        </section>
 
         <section class="cta-section">
             <div class="cta-content">
