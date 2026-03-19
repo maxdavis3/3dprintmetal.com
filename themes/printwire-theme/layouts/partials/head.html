@@ -1,0 +1,80 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.tagline }}{{ end }}">
+{{ with .Site.Params.keywords }}<meta name="keywords" content="{{ . }}">{{ end }}
+<meta property="og:title" content="{{ .Title }} | {{ .Site.Title }}">
+<meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ .Site.Params.tagline }}{{ end }}">
+<meta property="og:type" content="website">
+{{ $ogImg := .Site.Params.ogImage }}{{ with .Params.image }}{{ $ogImg = . }}{{ end }}
+{{ if hasPrefix $ogImg "http" }}<meta property="og:image" content="{{ $ogImg }}">{{ else }}<meta property="og:image" content="{{ .Site.BaseURL }}{{ $ogImg }}">{{ end }}
+<meta name="author" content="Max Davis, Ben Stagl, Ally Reza - ChiLab Studio">
+<title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family={{ .Site.Params.fontPrimary | default "Josefin+Sans" }}:wght@300;400;600;700&family={{ .Site.Params.fontSecondary | default "Lato" }}:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ .Site.BaseURL }}css/style.css">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">{{ .Site.Params.favicon | default "🔧" }}</text></svg>'>
+
+{{/* Per-site color overrides — safeCSS required for rgba() values */}}
+{{ $css := printf ":root{--primary:%s;--primary-dark:%s;--primary-light:%s;--bg-dark:%s;--bg-section:%s;--bg-card:%s;--bg-card-hover:%s;--border:%s;--border-light:%s;}"
+  (.Site.Params.colorPrimary      | default "#c2714f")
+  (.Site.Params.colorPrimaryDark  | default "#a85e3e")
+  (.Site.Params.colorPrimaryLight | default "#d4896b")
+  (.Site.Params.colorBgDark       | default "#0d0b09")
+  (.Site.Params.colorBgSection    | default "#111009")
+  (.Site.Params.colorBgCard       | default "#1a1510")
+  (.Site.Params.colorBgCardHover  | default "#231d15")
+  (.Site.Params.colorBorder       | default "rgba(194,113,79,0.18)")
+  (.Site.Params.colorBorderLight  | default "rgba(194,113,79,0.08)")
+}}
+<style>{{ $css | safeCSS }}</style>
+
+{{/* JSON-LD Structured Data */}}
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "{{ .Site.Title }}",
+    "url": "{{ .Site.BaseURL }}",
+    "description": "{{ .Site.Params.tagline }}",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "url": "{{ .Site.BaseURL }}contact/"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ .Site.Title }}",
+    "url": "{{ .Site.BaseURL }}"
+  }
+  {{ range .Site.Params.services }},
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "{{ .name }}",
+    "provider": {
+      "@type": "Organization",
+      "name": "{{ $.Site.Title }}",
+      "url": "{{ $.Site.BaseURL }}"
+    },
+    "url": "{{ $.Site.BaseURL }}services/"
+  }
+  {{ end }}
+]
+</script>
+
+{{/* AdSense — activate by adding adsenseId to config.toml */}}
+{{ with .Site.Params.adsenseId }}
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ . }}" crossorigin="anonymous"></script>
+{{ end }}
+
+{{/* JS config — read by main.js for per-site news feed */}}
+{{ $jsCfg := dict
+  "pubmedQuery"        (.Site.Params.pubmedQuery      | default "3D printing additive manufacturing")
+  "pubmedFallback"     (.Site.Params.pubmedFallback   | default "3D printing")
+  "newsFallbackImages" (.Site.Params.newsFallbackImages | default (slice "images/01.png" "images/02.png" "images/03.png"))
+}}
+<script>window.SITE_CONFIG={{ $jsCfg | jsonify | safeJS }};</script>

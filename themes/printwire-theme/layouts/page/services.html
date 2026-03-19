@@ -1,0 +1,96 @@
+{{ define "main" }}
+
+{{/* ── Page Hero ────────────────────────────────────────────────── */}}
+<section class="page-hero">
+  <div class="page-hero-bg">
+    {{ with .Params.heroImage }}
+    <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $.Title }}" loading="eager">
+    {{ else }}{{ with $.Site.Params.heroImage }}
+    <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $.Site.Title }}" loading="eager">
+    {{ end }}{{ end }}
+  </div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <h1>{{ .Title | default "Coverage &amp; Services" }}</h1>
+    {{ with .Params.subtitle }}<p class="page-hero-subtitle">{{ . }}</p>{{ end }}
+  </div>
+</section>
+
+{{/* ── Services Detail Grid ─────────────────────────────────────── */}}
+{{ with .Site.Params.services }}
+<section class="services-detail-section">
+  <div class="container-wide">
+    <div class="section-header animate-in">
+      <span class="section-label">Editorial Coverage</span>
+      <h2>{{ $.Params.servicesTitle | default "What We Cover" }}</h2>
+      {{ with $.Params.servicesIntro }}<p>{{ . }}</p>{{ end }}
+    </div>
+    <div class="services-detail-grid">
+      {{ range . }}
+      {{ $svc := . }}
+      <div class="service-detail-card animate-in">
+        {{ with .image }}
+        <div class="service-detail-image">
+          <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $svc.name }}" loading="lazy">
+        </div>
+        {{ end }}
+        <div class="service-detail-content">
+          {{ with .icon }}<div style="font-size:1.8rem;margin-bottom:0.75rem;">{{ . }}</div>{{ end }}
+          <h3>{{ .name }}</h3>
+          <p>{{ .description }}</p>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── Process / How We Work ────────────────────────────────────── */}}
+{{ with .Params.process }}
+<section class="timeline-section">
+  <div class="container-wide">
+    <div class="section-header center animate-in">
+      <span class="section-label">Our Process</span>
+      <h2>{{ $.Params.processTitle | default "How We Work" }}</h2>
+    </div>
+    <div class="timeline">
+      <div class="timeline-line"></div>
+      {{ range $i, $step := . }}
+      <div class="timeline-step animate-in">
+        <div class="timeline-number">{{ add $i 1 }}</div>
+        <div class="timeline-content">
+          <h3>{{ .title }}</h3>
+          <p>{{ .description }}</p>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── Body Content (from markdown) ───────────────────────────────── */}}
+{{ with .Content }}
+<section style="background:var(--bg-section); padding:4rem 0;">
+  <div class="container">
+    <div class="article-content">{{ . }}</div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── CTA ──────────────────────────────────────────────────────── */}}
+<section class="cta-section">
+  <div class="cta-background">
+    {{ with .Site.Params.ctaImage }}
+    <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="" loading="lazy">
+    {{ end }}
+  </div>
+  <div class="cta-content animate-in">
+    <h2>{{ .Params.ctaTitle | default .Site.Params.ctaTitle | default "Work With Us" }}</h2>
+    <p>{{ .Params.ctaText | default "Reach decision-makers in this vertical. Inquire about sponsorship and advertising." }}</p>
+    <a href="{{ $.Site.BaseURL }}advertise/" class="btn btn-large">Advertise With Us</a>
+  </div>
+</section>
+
+{{ end }}

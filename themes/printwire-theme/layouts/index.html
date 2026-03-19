@@ -1,0 +1,190 @@
+{{ define "main" }}
+
+{{/* ── Hero ──────────────────────────────────────────────────────── */}}
+<section class="site-hero">
+  <div class="hero-bg">
+    {{ with .Site.Params.heroImage }}
+    <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $.Site.Title }}" loading="eager">
+    {{ end }}
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content animate-in">
+    {{ with .Site.Params.heroEyebrow }}
+    <div class="hero-eyebrow">{{ . }}</div>
+    {{ end }}
+    <h1 class="hero-title">{{ .Site.Params.heroTitle | safeHTML }}</h1>
+    <p class="hero-subtitle">{{ .Site.Params.heroSubtitle }}</p>
+    <div class="hero-ctas">
+      {{ with .Site.Params.heroCta1Text }}
+      <a href="{{ $.Site.Params.heroCta1URL | default "/articles/" }}" class="btn btn-large">{{ . }}</a>
+      {{ end }}
+      {{ with .Site.Params.heroCta2Text }}
+      <a href="{{ $.Site.Params.heroCta2URL | default "/services/" }}" class="btn btn-outline btn-large">{{ . }}</a>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{/* ── News Feed ────────────────────────────────────────────────── */}}
+<section class="news-section">
+  <div class="container-wide">
+    <div class="section-header animate-in">
+      <span class="section-label">Latest Research</span>
+      <h2>{{ .Site.Params.newsSectionTitle | default "Recent Publications" }}</h2>
+      {{ with .Site.Params.newsSectionSubtitle }}<p>{{ . }}</p>{{ end }}
+    </div>
+    <div id="news-feed">
+      <p class="news-loading">Loading latest research...</p>
+    </div>
+  </div>
+</section>
+
+{{/* ── Stats ────────────────────────────────────────────────────── */}}
+{{ with .Site.Params.stats }}
+<section class="stats-section">
+  <div class="container-wide">
+    <div class="stats-bar">
+      {{ range . }}
+      <div class="animate-in">
+        <div class="stat-number" data-count="{{ .count }}">{{ .count }}{{ .suffix }}</div>
+        <div class="stat-label">{{ .label }}</div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── Overview ─────────────────────────────────────────────────── */}}
+{{ with .Site.Params.overviewTitle }}
+<section class="overview-section">
+  <div class="container-wide">
+    <div class="overview-grid">
+      {{ with $.Site.Params.overviewImage }}
+      <div class="overview-image animate-in">
+        <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $.Site.Params.overviewTitle }}" loading="lazy">
+      </div>
+      {{ end }}
+      <div class="overview-content animate-in">
+        {{ with $.Site.Params.overviewLabel }}
+        <span class="section-label">{{ . }}</span>
+        {{ end }}
+        <h2>{{ $.Site.Params.overviewTitle }}</h2>
+        {{ with $.Site.Params.overviewText }}<p>{{ . | safeHTML }}</p>{{ end }}
+        {{ with $.Site.Params.overviewText2 }}<p>{{ . | safeHTML }}</p>{{ end }}
+        {{ with $.Site.Params.overviewBtnText }}
+        <a href="{{ $.Site.Params.overviewBtnURL | default "/articles/" }}" class="btn btn-outline">{{ . }}</a>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── Applications ─────────────────────────────────────────────── */}}
+{{ with .Site.Params.applications }}
+<section class="applications-section">
+  <div class="container-wide">
+    <div class="section-header center animate-in">
+      {{ with $.Site.Params.applicationsLabel }}<span class="section-label">{{ . }}</span>{{ end }}
+      <h2>{{ $.Site.Params.applicationsTitle | default "Applications" }}</h2>
+      {{ with $.Site.Params.applicationsSubtitle }}<p>{{ . }}</p>{{ end }}
+    </div>
+    <div class="applications-grid">
+      {{ range . }}
+      <div class="application-card animate-in">
+        {{ with .image }}
+        <div class="application-card-image">
+          <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $.Title }}" loading="lazy">
+        </div>
+        {{ end }}
+        <div class="application-card-body">
+          <h3>{{ .title }}</h3>
+          <p>{{ .description }}</p>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── Services Preview ─────────────────────────────────────────── */}}
+{{ with .Site.Params.servicesPreview }}
+<section class="services-preview-section">
+  <div class="container-wide">
+    <div class="section-header center animate-in">
+      {{ with $.Site.Params.servicesLabel }}<span class="section-label">{{ . }}</span>{{ end }}
+      <h2>{{ $.Site.Params.servicesTitle | default "What We Cover" }}</h2>
+      {{ with $.Site.Params.servicesSubtitle }}<p>{{ . }}</p>{{ end }}
+    </div>
+    <div class="services-preview-grid">
+      {{ range . }}
+      <div class="service-preview-card animate-in">
+        <div class="service-icon">{{ .icon }}</div>
+        <h3>{{ .title }}</h3>
+        <p>{{ .description }}</p>
+      </div>
+      {{ end }}
+    </div>
+    <div style="text-align:center;margin-top:2.5rem;">
+      <a href="{{ $.Site.BaseURL }}services/" class="btn btn-outline">View All Coverage Areas</a>
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── Cluster Links ────────────────────────────────────────────── */}}
+{{ with .Site.Params.clusterLinks }}
+<section class="cluster-section">
+  <div class="container-wide">
+    <div class="section-header animate-in">
+      {{ with $.Site.Params.clusterLabel }}<span class="section-label">{{ . }}</span>{{ end }}
+      <h2>{{ $.Site.Params.clusterTitle | default "Related Sites" }}</h2>
+      {{ with $.Site.Params.clusterDesc }}<p>{{ . }}</p>{{ end }}
+    </div>
+    <div class="cluster-grid">
+      {{ range . }}
+      <a href="{{ .url }}" class="cluster-link-card animate-in" target="_blank" rel="noopener noreferrer">
+        <h4>{{ .name }}</h4>
+        {{ with .description }}<p>{{ . }}</p>{{ end }}
+      </a>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── Newsletter ───────────────────────────────────────────────── */}}
+<section class="newsletter-section">
+  <div class="container">
+    <div class="newsletter-inner animate-in">
+      <h2>{{ .Site.Params.newsletterTitle | default "Stay Current" }}</h2>
+      <p>{{ .Site.Params.newsletterText | default "Get the latest research and industry news delivered to your inbox." }}</p>
+      <form id="newsletter-form" class="newsletter-form">
+        <input type="hidden" name="access_key" value="6f33053b-6d08-414b-9615-665f88c98da8">
+        <input type="hidden" name="subject" value="Newsletter Signup — {{ .Site.Title }}">
+        <input type="email" name="email" placeholder="your@email.com" required>
+        <button type="submit" class="btn">Subscribe Free</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+{{/* ── CTA ──────────────────────────────────────────────────────── */}}
+<section class="cta-section">
+  <div class="cta-background">
+    {{ with .Site.Params.ctaImage }}
+    <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="" loading="lazy">
+    {{ end }}
+  </div>
+  <div class="cta-content animate-in">
+    <h2>{{ .Site.Params.ctaTitle | default "Explore the Research" }}</h2>
+    <p>{{ .Site.Params.ctaText | default "Browse our articles, analysis, and guides." }}</p>
+    <a href="{{ .Site.Params.ctaBtnURL | default "/articles/" }}" class="btn btn-large">
+      {{ .Site.Params.ctaBtnText | default "Browse Articles" }}
+    </a>
+  </div>
+</section>
+
+{{ end }}

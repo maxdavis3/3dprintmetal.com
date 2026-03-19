@@ -1,0 +1,66 @@
+{{ define "main" }}
+
+{{/* ── Article Hero ─────────────────────────────────────────────── */}}
+<section class="page-hero article-hero">
+  <div class="page-hero-bg">
+    {{ with .Params.image }}
+    <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $.Title }}" loading="eager">
+    {{ else }}
+    {{ with $.Site.Params.heroImage }}
+    <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $.Site.Title }}" loading="eager">
+    {{ end }}
+    {{ end }}
+  </div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <div style="max-width:800px;">
+      {{ with .Params.category }}
+      <div class="hero-eyebrow">{{ . }}</div>
+      {{ end }}
+      <h1>{{ .Title }}</h1>
+      {{ with .Params.summary }}
+      <p class="page-hero-subtitle">{{ . }}</p>
+      {{ end }}
+    </div>
+  </div>
+</section>
+
+{{/* ── Article Body ─────────────────────────────────────────────── */}}
+<section class="article-body">
+  <div class="article-container">
+
+    <div class="article-back">
+      <a href="{{ .Site.BaseURL }}articles/">&larr; All Articles</a>
+    </div>
+
+    <div class="article-meta">
+      {{ with .Date }}
+      <span class="article-meta-item">
+        <strong>Published</strong> {{ .Format "January 2, 2006" }}
+      </span>
+      {{ end }}
+      {{ with .Params.author }}
+      <span class="article-meta-item">
+        <strong>By</strong> {{ . }}
+      </span>
+      {{ end }}
+      {{ with .Params.category }}
+      <span class="article-tag">{{ . }}</span>
+      {{ end }}
+      {{ range .Params.tags }}
+      <span class="article-tag">{{ . }}</span>
+      {{ end }}
+    </div>
+
+    <div class="article-content">
+      {{ .Content }}
+    </div>
+
+    <div style="margin-top:3rem; padding-top:2rem; border-top:1px solid var(--border-light);">
+      <a href="{{ .Site.BaseURL }}articles/" class="btn btn-outline">&larr; Back to All Articles</a>
+    </div>
+
+  </div>
+</section>
+
+{{ end }}

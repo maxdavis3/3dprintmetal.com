@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>3D Print Metal</title>
+    <link>https://3dprintmetal.com/</link>
+    <description>Recent content on 3D Print Metal</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <atom:link href="https://3dprintmetal.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About 3D Print Metal</title>
+      <link>https://3dprintmetal.com/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://3dprintmetal.com/about/</guid>
+      <description>&lt;h2 id=&#34;precision-metal-parts-industrial-grade-additive-manufacturing&#34;&gt;Precision Metal Parts. Industrial-Grade Additive Manufacturing.&lt;/h2&gt;&#xA;&lt;p&gt;3D Print Metal is a specialized resource covering metal additive manufacturing for engineers, materials scientists, and procurement officers. We cover DMLS, SLM, and EBM process parameters, alloy selection, post-processing requirements, and supplier qualification with the technical depth that generalist publications miss.&lt;/p&gt;&#xA;&lt;p&gt;Ben Stagl (SAIC professor, 20-year fabrication veteran) and Max Davis (MAXCNC) bring hands-on manufacturing expertise to the highest-stakes vertical in additive manufacturing. Metal DMLS parts at $2,000–$20,000 per build have no margin for ambiguity.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Advertise on 3D Print Metal</title>
+      <link>https://3dprintmetal.com/advertise/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://3dprintmetal.com/advertise/</guid>
+      <description>&lt;h2 id=&#34;advertise-on-3d-print-metal&#34;&gt;Advertise on 3D Print Metal&lt;/h2&gt;&#xA;&lt;p&gt;Our audience is the highest-value segment in additive manufacturing: engineers and procurement officers sourcing DMLS and SLM metal parts for aerospace structures, medical implants, and critical industrial components. These are $10K–$500K purchase decisions.&lt;/p&gt;&#xA;&lt;h3 id=&#34;audience-profile&#34;&gt;Audience Profile&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Job titles:&lt;/strong&gt; Aerospace structures engineer, medical device engineer, procurement officer, materials scientist&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Industry:&lt;/strong&gt; Aerospace (OEM and tier-1), medical devices, motorsport, defence, energy&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Decision value:&lt;/strong&gt; Metal AM parts typically $2,000–$50,000 per production run&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;advertising-packages&#34;&gt;Advertising Packages&lt;/h3&gt;&#xA;&lt;table&gt;&#xA;  &lt;thead&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;th&gt;Package&lt;/th&gt;&#xA;          &lt;th&gt;Rate&lt;/th&gt;&#xA;          &lt;th&gt;Placement&lt;/th&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/thead&gt;&#xA;  &lt;tbody&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Banner Ad (728×90)&lt;/td&gt;&#xA;          &lt;td&gt;$500/month&lt;/td&gt;&#xA;          &lt;td&gt;Homepage leaderboard&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Sponsored Content&lt;/td&gt;&#xA;          &lt;td&gt;$1,200/month&lt;/td&gt;&#xA;          &lt;td&gt;Technical article feature&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;      &lt;tr&gt;&#xA;          &lt;td&gt;Network Package&lt;/td&gt;&#xA;          &lt;td&gt;$3,500/month&lt;/td&gt;&#xA;          &lt;td&gt;All PrintWire metal sites&lt;/td&gt;&#xA;      &lt;/tr&gt;&#xA;  &lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;strong&gt;Ideal partners:&lt;/strong&gt; DMLS service bureaus, metal powder suppliers, HIP/heat treatment facilities, DfAM and simulation software.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Contact</title>
+      <link>https://3dprintmetal.com/contact/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://3dprintmetal.com/contact/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Metal 3D Printing Services</title>
+      <link>https://3dprintmetal.com/services/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://3dprintmetal.com/services/</guid>
+      <description>&lt;h2 id=&#34;dmls--slm-printing&#34;&gt;DMLS &amp;amp; SLM Printing&lt;/h2&gt;&#xA;&lt;p&gt;Our Direct Metal Laser Sintering and Selective Laser Melting systems use high-powered lasers to fuse metal powder layer by layer, producing fully dense parts with mechanical properties comparable to wrought material. Industrial platforms with build volumes up to 400 × 400 × 400 mm process titanium, stainless steel, Inconel, aluminum, cobalt chrome, and tool steels. Parts achieve densities exceeding 99.5% with surface finishes as fine as Ra 6–10 µm as-built.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

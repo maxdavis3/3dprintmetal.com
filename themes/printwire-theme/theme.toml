@@ -1,0 +1,9 @@
+name = "PrintWire"
+license = "MIT"
+licenselink = ""
+description = "Shared theme for the PrintWire 194-domain 3D printing media network"
+homepage = "https://dmls3d.com"
+min_version = "0.120.0"
+
+[author]
+  name = "Ben Stagl / Max Davis — ChiLab Studio"

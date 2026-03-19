@@ -1,0 +1,87 @@
+{{ define "main" }}
+
+{{/* ── Page Hero ────────────────────────────────────────────────── */}}
+<section class="page-hero">
+  <div class="page-hero-bg">
+    {{ with .Params.heroImage }}
+    <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $.Title }}" loading="eager">
+    {{ else }}{{ with $.Site.Params.heroImage }}
+    <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $.Site.Title }}" loading="eager">
+    {{ end }}{{ end }}
+  </div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <h1>{{ .Title | default "Contact Us" }}</h1>
+    {{ with .Params.subtitle }}<p class="page-hero-subtitle">{{ . }}</p>{{ end }}
+  </div>
+</section>
+
+{{/* ── Contact Section ─────────────────────────────────────────── */}}
+<section class="contact-section">
+  <div class="container-wide">
+    <div class="contact-grid">
+
+      <div class="contact-info animate-in">
+        <h2>{{ .Params.contactTitle | default "Get in Touch" }}</h2>
+        <p>{{ .Params.contactIntro | default "Have a question, story tip, or advertising inquiry? We'd love to hear from you." }}</p>
+
+        <div class="contact-detail">
+          <span class="contact-detail-icon">✉</span>
+          <span class="contact-detail-text">{{ .Site.Params.contactEmail | default "maxdavisgroup@gmail.com" }}</span>
+        </div>
+
+        {{ with .Params.contactAddress }}
+        <div class="contact-detail">
+          <span class="contact-detail-icon">📍</span>
+          <span class="contact-detail-text">{{ . }}</span>
+        </div>
+        {{ end }}
+
+        {{ with .Params.contactTopics }}
+        <div style="margin-top:2rem;">
+          <h4 style="margin-bottom:1rem;font-size:0.82rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--text-muted);">We Can Help With</h4>
+          <ul style="list-style:none;padding:0;">
+            {{ range . }}
+            <li style="padding:0.4rem 0;color:var(--text-secondary);font-size:0.93rem;border-bottom:1px solid var(--border-light);display:flex;gap:0.5rem;">
+              <span style="color:var(--primary-light);">→</span> {{ . }}
+            </li>
+            {{ end }}
+          </ul>
+        </div>
+        {{ end }}
+      </div>
+
+      <div class="animate-in">
+        <div class="contact-form-wrap">
+          <h3 style="margin-bottom:1.5rem;">Send a Message</h3>
+          <div class="form-message"></div>
+          <form id="contact-form">
+            <input type="hidden" name="access_key" value="6f33053b-6d08-414b-9615-665f88c98da8">
+            <input type="hidden" name="subject" value="Contact — {{ .Site.Title }}">
+
+            <div class="form-group">
+              <label class="form-label" for="name">Name</label>
+              <input class="form-input" type="text" id="name" name="name" placeholder="Your full name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email</label>
+              <input class="form-input" type="email" id="email" name="email" placeholder="you@example.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="subject-field">Subject</label>
+              <input class="form-input" type="text" id="subject-field" name="subject_detail" placeholder="How can we help?">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="message">Message</label>
+              <textarea class="form-textarea" id="message" name="message" placeholder="Tell us more..." required></textarea>
+            </div>
+            <button type="submit" class="btn" style="width:100%;">Send Message</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{{ end }}

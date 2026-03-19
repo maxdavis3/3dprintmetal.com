@@ -1,0 +1,60 @@
+<footer class="site-footer">
+    <div class="footer-container">
+        <div class="footer-main">
+            <div class="footer-brand">
+                <div class="footer-logo">{{ with .Site.Params.logoEmoji }}{{ . }} {{ end }}{{ .Site.Title }}</div>
+                <p>{{ .Site.Params.tagline }}</p>
+            </div>
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="{{ .Site.BaseURL }}about/">About Us</a></li>
+                        <li><a href="{{ .Site.BaseURL }}services/">Services</a></li>
+                        <li><a href="{{ .Site.BaseURL }}contact/">Contact</a></li>
+                        <li><a href="{{ .Site.BaseURL }}advertise/">Advertise</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>{{ .Site.Params.footerServicesLabel | default "Services" }}</h4>
+                    <ul>
+                        {{ range .Site.Params.footerServices }}
+                        <li><a href="{{ $.Site.BaseURL }}services/">{{ . }}</a></li>
+                        {{ end }}
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Articles</h4>
+                    <ul>
+                        <li><a href="{{ .Site.BaseURL }}articles/">All Articles</a></li>
+                        <li><a href="{{ .Site.BaseURL }}contact/">Contact Us</a></li>
+                        <li><a href="{{ .Site.BaseURL }}advertise/">Advertising</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; {{ now.Year }} {{ .Site.Title }}. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="{{ .Site.BaseURL }}js/main.js"></script>
+
+{{/* Network Bar — links to all PrintWire flagships */}}
+<div style="background:#080705;border-top:1px solid var(--border-light);padding:0.75rem 1rem;text-align:center;overflow-x:auto;white-space:nowrap;">
+  <span style="color:var(--text-muted);font-size:0.75rem;margin-right:0.5rem;">NETWORK:</span>
+  <a href="https://dmls3d.com" style="color:var(--text-secondary);text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Metal 3D Printing</a>
+  <a href="https://metalpowder.co" style="color:var(--text-secondary);text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Metal Powder</a>
+  <a href="https://3dprintfood.com" style="color:var(--text-secondary);text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Food Printing</a>
+  <a href="https://3dprintceramic.com" style="color:var(--text-secondary);text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Ceramic Printing</a>
+  <a href="https://3dprintcircuitry.com" style="color:var(--text-secondary);text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Electronics Printing</a>
+  <a href="https://3dprintjewelry.com" style="color:var(--text-secondary);text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Jewelry Printing</a>
+  <a href="https://3dprintarchitecture.com" style="color:var(--text-secondary);text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Architecture Printing</a>
+  <a href="https://3dprintpipes.com" style="color:var(--text-secondary);text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Industrial Printing</a>
+  <a href="https://sendcutship.com" style="color:var(--text-secondary);text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Manufacturing</a>
+  <a href="https://3dprintskincare.com" style="color:var(--text-secondary);text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Beauty &amp; Cosmetics</a>
+  <a href="https://3dprintsolar.com" style="color:var(--text-secondary);text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Clean Energy</a>
+  <a href="https://3dprinttitanium.com" style="color:var(--text-secondary);text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Titanium Printing</a>
+  <a href="https://3dprinttissue.com" style="color:var(--text-secondary);text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Bioprinting</a>
+</div>

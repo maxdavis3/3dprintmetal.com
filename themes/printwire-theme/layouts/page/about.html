@@ -1,0 +1,107 @@
+{{ define "main" }}
+
+{{/* ── Page Hero ────────────────────────────────────────────────── */}}
+<section class="page-hero">
+  <div class="page-hero-bg">
+    {{ with .Params.heroImage }}
+    <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $.Title }}" loading="eager">
+    {{ else }}{{ with $.Site.Params.heroImage }}
+    <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $.Site.Title }}" loading="eager">
+    {{ end }}{{ end }}
+  </div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <h1>{{ .Title | default "About Us" }}</h1>
+    {{ with .Params.subtitle }}<p class="page-hero-subtitle">{{ . }}</p>{{ end }}
+  </div>
+</section>
+
+{{/* ── Story ─────────────────────────────────────────────────────── */}}
+{{ with .Params.storyTitle }}
+<section class="story-section">
+  <div class="container-wide">
+    <div class="story-grid">
+      {{ with $.Params.storyImage }}
+      <div class="story-image animate-in">
+        <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $.Params.storyTitle }}" loading="lazy">
+      </div>
+      {{ end }}
+      <div class="story-content animate-in">
+        <span class="section-label">Our Story</span>
+        <h2>{{ $.Params.storyTitle }}</h2>
+        {{ range $.Params.storyText }}
+        <p>{{ . }}</p>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── Mission Cards ────────────────────────────────────────────── */}}
+{{ with .Params.missionCards }}
+<section class="mission-section">
+  <div class="container-wide">
+    <div class="section-header center animate-in">
+      <span class="section-label">What Drives Us</span>
+      <h2>Mission &amp; Vision</h2>
+    </div>
+    <div class="mission-grid">
+      {{ range . }}
+      <div class="mission-card animate-in">
+        <h3>{{ .title }}</h3>
+        <p>{{ .text }}</p>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── Values ───────────────────────────────────────────────────── */}}
+{{ with .Params.values }}
+<section class="values-section">
+  <div class="container-wide">
+    <div class="section-header center animate-in">
+      <span class="section-label">Editorial Standards</span>
+      <h2>Our Values</h2>
+    </div>
+    <div class="values-grid">
+      {{ range . }}
+      <div class="value-card animate-in">
+        <div class="value-icon">{{ .icon }}</div>
+        <h3>{{ .title }}</h3>
+        <p>{{ .text }}</p>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── Body Content (from markdown) ───────────────────────────────── */}}
+{{ with .Content }}
+<section style="background:var(--bg-dark); padding:4rem 0;">
+  <div class="container">
+    <div class="article-content">{{ . }}</div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── CTA ──────────────────────────────────────────────────────── */}}
+<section class="newsletter-section">
+  <div class="container">
+    <div class="newsletter-inner animate-in">
+      <h2>{{ .Site.Params.newsletterTitle | default "Stay Current" }}</h2>
+      <p>{{ .Site.Params.newsletterText | default "Get the latest research and industry news." }}</p>
+      <form id="newsletter-form" class="newsletter-form">
+        <input type="hidden" name="access_key" value="6f33053b-6d08-414b-9615-665f88c98da8">
+        <input type="hidden" name="subject" value="Newsletter — {{ .Site.Title }}">
+        <input type="email" name="email" placeholder="your@email.com" required>
+        <button type="submit" class="btn">Subscribe Free</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+{{ end }}

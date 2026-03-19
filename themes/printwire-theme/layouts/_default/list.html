@@ -1,0 +1,63 @@
+{{ define "main" }}
+
+{{/* ── Section Hero ────────────────────────────────────────────── */}}
+<section class="page-hero">
+  <div class="page-hero-bg">
+    {{ with .Site.Params.heroImage }}
+    <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $.Site.Title }}" loading="eager">
+    {{ end }}
+  </div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <h1>{{ .Title | default "Articles" }}</h1>
+    <p class="page-hero-subtitle">
+      {{ with .Description }}{{ . }}{{ else }}Research, analysis, and guides from the {{ $.Site.Title }} editorial team.{{ end }}
+    </p>
+  </div>
+</section>
+
+{{/* ── Articles Grid ────────────────────────────────────────────── */}}
+<section class="articles-list-section">
+  <div class="container-wide">
+
+    {{ if .Pages }}
+    {{ $fallbacks := $.Site.Params.newsFallbackImages | default (slice "images/01.png" "images/02.png" "images/03.png") }}
+    <div class="articles-grid">
+      {{ range $idx, $page := .Pages }}
+      <article class="article-card animate-in">
+        {{ with $page.Params.image }}
+        <div class="article-card-image">
+          <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $page.Title }}" loading="lazy">
+        </div>
+        {{ else }}
+        {{ $fallbackImg := index $fallbacks (mod $idx (len $fallbacks)) }}
+        <div class="article-card-image">
+          <img src="{{ if hasPrefix $fallbackImg "http" }}{{ $fallbackImg }}{{ else }}{{ $.Site.BaseURL }}{{ $fallbackImg }}{{ end }}" alt="{{ $page.Title }}" loading="lazy">
+        </div>
+        {{ end }}
+        <div class="article-card-body">
+          <div class="article-card-meta">
+            {{ with .Params.category }}{{ . }} &bull; {{ end }}{{ .Date.Format "Jan 2, 2006" }}
+          </div>
+          <h3>{{ .Title }}</h3>
+          <p>{{ with .Params.summary }}{{ . }}{{ else }}{{ .Summary }}{{ end }}</p>
+          <a href="{{ .Permalink }}" class="article-card-link">Read More &rarr;</a>
+        </div>
+      </article>
+      {{ end }}
+    </div>
+
+    {{/* Pagination */}}
+    {{ template "_internal/pagination.html" . }}
+
+    {{ else }}
+    <div style="text-align:center; padding:5rem 0; color:var(--text-muted);">
+      <p style="font-size:1.1rem;">No articles published yet.</p>
+      <p>Check back soon for research coverage, technical analysis, and industry news.</p>
+    </div>
+    {{ end }}
+
+  </div>
+</section>
+
+{{ end }}

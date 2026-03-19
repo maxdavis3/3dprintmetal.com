@@ -1,0 +1,128 @@
+baseURL = "https://3dprintmetal.com/"
+languageCode = "en-us"
+title = "3D Print Metal"
+theme = "printwire-theme"
+
+[params]
+  siteName       = "3D Print Metal"
+  tagline        = "Precision metal parts via DMLS, SLM, and EBM. Ti6Al4V, 316L, Inconel, AlSi10Mg — from rapid prototypes to production runs."
+  colorPrimary      = "#00d9ff"
+  colorPrimaryDark  = "#00a8cc"
+  colorPrimaryLight = "#33e1ff"
+  colorBgDark       = "#0a0e27"
+  colorBgSection    = "#0d1228"
+  colorBgCard       = "#12172e"
+  colorBgCardHover  = "#181f3a"
+  colorBorder       = "rgba(0,217,255,0.18)"
+  colorBorderLight  = "rgba(0,217,255,0.08)"
+  fontPrimary    = "Orbitron"
+  fontSecondary  = "Space Grotesk"
+  fontURL        = "https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+  ogImage        = "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1200&q=80"
+  favicon        = "⚙️"
+  pubmedQuery    = "metal+3D+printing+DMLS+SLM+additive+manufacturing+titanium+aerospace"
+  pubmedFallback = "metal additive manufacturing"
+  contactEmail   = "maxdavisgroup@gmail.com"
+  web3formsKey   = "6f33053b-6d08-414b-9615-665f88c98da8"
+  domain         = "3dprintmetal.com"
+  heroImage      = "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1920&q=80"
+  overviewImage  = "https://images.unsplash.com/photo-1735547577700-0fdeef45eef6?w=800&q=80"
+  ctaImage       = "https://images.unsplash.com/photo-1563520239648-a24e4483820a?w=800&q=80"
+  newsFallbackImages = [
+    "https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=600&q=80",
+    "https://images.unsplash.com/photo-1565043666747-69f6646db940?w=600&q=80",
+    "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600&q=80"
+  ]
+
+[[params.stats]]
+  number = "99.7%"
+  label  = "Part Density"
+
+[[params.stats]]
+  number = "±0.1mm"
+  label  = "Tolerance"
+
+[[params.stats]]
+  number = "12+"
+  label  = "Metal Alloys"
+
+[[params.stats]]
+  number = "48hr"
+  label  = "Fastest Turnaround"
+
+[[params.services]]
+  name        = "DMLS & SLM Printing"
+  icon        = "◎"
+  image       = "https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=600&q=80"
+  description = "Direct Metal Laser Sintering and Selective Laser Melting for fully dense metal parts in titanium, stainless steel, Inconel, and aluminum alloys."
+
+[[params.services]]
+  name        = "Rapid Prototyping"
+  icon        = "✦"
+  image       = "https://images.unsplash.com/photo-1565043666747-69f6646db940?w=600&q=80"
+  description = "Functional metal prototypes in as little as 48 hours. Iterate designs with production-grade materials and mechanical properties."
+
+[[params.services]]
+  name        = "Post-Processing & Finishing"
+  icon        = "⚙"
+  image       = "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600&q=80"
+  description = "Stress relief, HIP, CNC machining to ±0.001\", EDM, bead blast, electropolish, and anodizing — full post-processing chain."
+
+[[params.services]]
+  name        = "DfAM Consulting"
+  icon        = "◈"
+  image       = "https://images.unsplash.com/photo-1632913516644-9c0861f6fbf5?w=600&q=80"
+  description = "Topology optimization, support strategy, assembly consolidation, and design-for-additive consultation to maximize performance."
+
+[[params.applications]]
+  title       = "Aerospace"
+  description = "Lightweight turbine blades, brackets, and structural components meeting AS9100 standards. Ti6Al4V and Inconel 718 for extreme environments."
+  image       = "https://images.unsplash.com/photo-1717785942714-cf4a0aad49b3?w=600&q=80"
+
+[[params.applications]]
+  title       = "Medical"
+  description = "Biocompatible implants, surgical instruments, and custom prosthetics in titanium and CoCrMo. ASTM F136 and ISO 5832 compliant."
+  image       = "https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=600&q=80"
+
+[[params.applications]]
+  title       = "Industrial"
+  description = "Custom tooling, conformal cooling inserts, and production fixtures with complex internal geometries impossible to machine conventionally."
+  image       = "https://images.unsplash.com/photo-1565043666747-69f6646db940?w=600&q=80"
+
+[[params.applications]]
+  title       = "Energy"
+  description = "High-temperature components for turbines, heat exchangers, and nuclear applications in Inconel 625, 718, and refractory alloys."
+  image       = "https://images.unsplash.com/photo-1563520239648-a24e4483820a?w=600&q=80"
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[[menu.main]]
+  name   = "Home"
+  url    = "/"
+  weight = 1
+
+[[menu.main]]
+  name   = "About"
+  url    = "/about/"
+  weight = 2
+
+[[menu.main]]
+  name   = "Articles"
+  url    = "/articles/"
+  weight = 3
+
+[[menu.main]]
+  name   = "Services"
+  url    = "/services/"
+  weight = 4
+
+[[menu.main]]
+  name   = "Contact"
+  url    = "/contact/"
+  weight = 5
+
+[[menu.main]]
+  name   = "Advertise"
+  url    = "/advertise/"
+  weight = 6

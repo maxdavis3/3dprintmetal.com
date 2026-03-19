@@ -1,0 +1,168 @@
+{{ define "main" }}
+
+{{/* ── Page Hero ────────────────────────────────────────────────── */}}
+<section class="page-hero">
+  <div class="page-hero-bg">
+    {{ with .Params.heroImage }}
+    <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $.Title }}" loading="eager">
+    {{ else }}{{ with $.Site.Params.heroImage }}
+    <img src="{{ if hasPrefix . "http" }}{{ . }}{{ else }}{{ $.Site.BaseURL }}{{ . }}{{ end }}" alt="{{ $.Site.Title }}" loading="eager">
+    {{ end }}{{ end }}
+  </div>
+  <div class="page-hero-overlay"></div>
+  <div class="page-hero-content">
+    <h1>{{ .Title | default "Advertise" }}</h1>
+    {{ with .Params.subtitle }}<p class="page-hero-subtitle">{{ . }}</p>{{ end }}
+  </div>
+</section>
+
+{{/* ── Audience Stats ───────────────────────────────────────────── */}}
+{{ with .Params.audience }}
+<section class="audience-section" style="padding:4rem 0;">
+  <div class="container-wide">
+    <div class="section-header center animate-in">
+      <span class="section-label">Our Audience</span>
+      <h2>{{ $.Params.audienceTitle | default "Who We Reach" }}</h2>
+      {{ with $.Params.audienceIntro }}<p>{{ . }}</p>{{ end }}
+    </div>
+    <div class="audience-grid">
+      {{ range . }}
+      <div class="audience-card animate-in">
+        <div class="audience-num">{{ .value }}</div>
+        <div class="stat-label">{{ .label }}</div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── Rates ────────────────────────────────────────────────────── */}}
+{{ with .Params.rates }}
+<section class="rates-section">
+  <div class="container-wide">
+    <div class="section-header center animate-in">
+      <span class="section-label">Pricing</span>
+      <h2>{{ $.Params.ratesTitle | default "Advertising Rates" }}</h2>
+      {{ with $.Params.ratesIntro }}<p>{{ . }}</p>{{ end }}
+    </div>
+    <div class="rates-grid">
+      {{ range . }}
+      <div class="rate-card{{ if .featured }} featured{{ end }} animate-in">
+        <h3>{{ .name }}</h3>
+        <div class="rate-card-price">{{ .price }}</div>
+        <div class="rate-card-period">{{ .period }}</div>
+        {{ with .features }}
+        <ul>
+          {{ range . }}
+          <li>{{ . }}</li>
+          {{ end }}
+        </ul>
+        {{ end }}
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── Ad Specs ─────────────────────────────────────────────────── */}}
+{{ with .Params.adSpecs }}
+<section style="background:var(--bg-dark); padding:4rem 0;">
+  <div class="container-wide">
+    <div class="section-header animate-in">
+      <span class="section-label">Specifications</span>
+      <h2>Ad Specifications</h2>
+    </div>
+    <div class="services-preview-grid">
+      {{ range . }}
+      <div class="service-preview-card animate-in">
+        <h3>{{ .format }}</h3>
+        <p><strong style="color:var(--primary-light);">{{ .size }}</strong></p>
+        {{ with .notes }}<p>{{ . }}</p>{{ end }}
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{/* ── Inquiry Form ─────────────────────────────────────────────── */}}
+<section class="contact-section" id="inquiry">
+  <div class="container-wide">
+    <div class="contact-grid">
+      <div class="animate-in">
+        <span class="section-label">Get Started</span>
+        <h2>Request a Media Kit</h2>
+        <p>{{ .Params.inquiryIntro | default "Tell us about your campaign goals and we'll put together a custom proposal within 24 hours." }}</p>
+        <div style="margin-top:2rem;">
+          <div class="contact-detail">
+            <span class="contact-detail-icon">✉</span>
+            <span class="contact-detail-text">{{ .Site.Params.contactEmail | default "maxdavisgroup@gmail.com" }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="animate-in">
+        <div class="contact-form-wrap">
+          <h3 style="margin-bottom:1.5rem;">Advertising Inquiry</h3>
+          <div class="form-message"></div>
+          <form id="advertise-form">
+            <input type="hidden" name="access_key" value="6f33053b-6d08-414b-9615-665f88c98da8">
+            <input type="hidden" name="subject" value="Advertising Inquiry — {{ .Site.Title }}">
+
+            <div class="form-group">
+              <label class="form-label" for="ad-name">Name</label>
+              <input class="form-input" type="text" id="ad-name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ad-email">Email</label>
+              <input class="form-input" type="email" id="ad-email" name="email" placeholder="you@company.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ad-company">Company</label>
+              <input class="form-input" type="text" id="ad-company" name="company" placeholder="Your company">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ad-budget">Monthly Budget</label>
+              <select class="form-input form-select" id="ad-budget" name="budget">
+                <option value="">Select range</option>
+                <option>Under $500</option>
+                <option>$500 – $1,500</option>
+                <option>$1,500 – $5,000</option>
+                <option>$5,000+</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ad-message">Campaign Goals</label>
+              <textarea class="form-textarea" id="ad-message" name="message" placeholder="Tell us about your target audience and goals..." required></textarea>
+            </div>
+            <button type="submit" class="btn" style="width:100%;">Request Media Kit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{/* ── Network Value Prop ───────────────────────────────────────── */}}
+{{ with .Params.networkStats }}
+<section style="background:var(--bg-section); padding:4rem 0;">
+  <div class="container-wide">
+    <div class="section-header center animate-in">
+      <span class="section-label">Network Scale</span>
+      <h2>{{ $.Params.networkTitle | default "The PrintWire Network Advantage" }}</h2>
+      {{ with $.Params.networkIntro }}<p>{{ . }}</p>{{ end }}
+    </div>
+    <div class="stats-bar" style="margin-top:2.5rem;">
+      {{ range . }}
+      <div class="animate-in">
+        <div class="stat-number">{{ .value }}</div>
+        <div class="stat-label">{{ .label }}</div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }}
+
+{{ end }}
