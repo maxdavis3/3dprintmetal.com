@@ -1,0 +1,86 @@
+{{/*
+  PrintWire 3D Model Viewer Shortcode
+  ─────────────────────────────────────
+  Usage:
+    {{< model-viewer src="/models/part.glb" >}}
+    {{< model-viewer src="/models/part.stl" height="600" autorotate="false" background="#0d1117" >}}
+
+  Parameters:
+    src         (required) Path to .glb, .gltf, or .stl file
+    height      (optional) Canvas height in px          default: 500
+    autorotate  (optional) Auto-rotate on load          default: true
+    background  (optional) Background hex colour        default: #1a1a2e
+    theme       (optional) "dark"|"light"|"auto"        default: auto
+    caption     (optional) Caption text below viewer
+    class       (optional) Extra CSS classes on wrapper
+*/}}
+
+{{ $src        := .Get "src"        | default "" }}
+{{ $height     := .Get "height"     | default "500" }}
+{{ $autorotate := .Get "autorotate" | default "true" }}
+{{ $background := .Get "background" | default "#1a1a2e" }}
+{{ $theme      := .Get "theme"      | default "auto" }}
+{{ $caption    := .Get "caption"    | default "" }}
+{{ $extraClass := .Get "class"      | default "" }}
+
+{{/* Generate a unique ID so multiple viewers can coexist on the page */}}
+{{ $uid := printf "mv-%s" (md5 (printf "%s%s" $src (now.UnixNano | string))) }}
+
+{{/* Three.js version */}}
+{{ $threever := "0.168.0" }}
+{{ $cdn      := printf "https://cdn.jsdelivr.net/npm/three@%s" $threever }}
+
+{{/* Only inject CSS/importmap once per page */}}
+{{ if not (.Page.Scratch.Get "mv-assets-loaded") }}
+  {{ .Page.Scratch.Set "mv-assets-loaded" true }}
+
+  <link rel="stylesheet" href="{{ "css/model-viewer.css" | relURL }}">
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "{{ $cdn }}/build/three.module.js",
+      "three/addons/": "{{ $cdn }}/examples/jsm/"
+    }
+  }
+  </script>
+
+  <script src="{{ "js/model-viewer.js" | relURL }}" defer></script>
+{{ end }}
+
+<figure class="pw-model-viewer-figure {{ $extraClass }}">
+  <div
+    class="pw-model-viewer-wrap"
+    id="{{ $uid }}"
+    style="--mv-bg: {{ $background }};"
+    data-src="{{ $src }}"
+    data-height="{{ $height }}"
+    data-autorotate="{{ $autorotate }}"
+    data-background="{{ $background }}"
+    data-theme="{{ $theme }}"
+    aria-label="Interactive 3D model viewer"
+    role="img"
+  ></div>
+  {{ with $caption }}
+  <figcaption class="mv-caption">{{ . }}</figcaption>
+  {{ end }}
+</figure>
+
+<script type="module">
+  // Wait for model-viewer.js to define the global, then init
+  (function waitAndInit() {
+    if (window.PrintWireModelViewer) {
+      const el  = document.getElementById("{{ $uid }}");
+      const raw = el.dataset;
+      window.PrintWireModelViewer.init("{{ $uid }}", {
+        src:        raw.src,
+        height:     parseInt(raw.height, 10) || 500,
+        autorotate: raw.autorotate !== "false",
+        background: raw.background,
+        theme:      raw.theme,
+      });
+    } else {
+      setTimeout(waitAndInit, 50);
+    }
+  })();
+</script>
