@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Model Viewer — Upload & View Any 3D File</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🖨️</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #0a0a0f;
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .header {
+      text-align: center;
+      padding: 24px 20px 12px;
+      flex-shrink: 0;
+    }
+    .header h1 {
+      font-size: clamp(22px, 5vw, 36px);
+      font-weight: 800;
+      background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+    .header p { color: #555; font-size: 14px; }
+
+    /* Drop zone */
+    #drop-zone {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 20px 20px;
+      border: 2px dashed #2a2a3a;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      user-select: none;
+    }
+    #drop-zone:hover, #drop-zone.dragover {
+      border-color: #00d4ff;
+      background: rgba(0, 212, 255, 0.04);
+    }
+    .drop-icon { font-size: 60px; margin-bottom: 16px; pointer-events: none; }
+    .drop-title { font-size: 22px; font-weight: 800; margin-bottom: 8px; pointer-events: none; }
+    .drop-sub { font-size: 14px; color: #555; margin-bottom: 24px; pointer-events: none; }
+    .format-badges { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; pointer-events: none; }
+    .badge {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #888;
+      letter-spacing: 0.05em;
+    }
+    .btn-upload {
+      margin-top: 28px;
+      background: linear-gradient(135deg, #00d4ff, #7b2ff7);
+      border: none;
+      color: #fff;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 12px 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn-upload:hover { opacity: 0.85; }
+    #file-input { display: none; }
+
+    /* Viewer */
+    #viewer {
+      flex: 1;
+      position: relative;
+      display: none;
+      overflow: hidden;
+    }
+    canvas { display: block; width: 100% !important; height: 100% !important; }
+
+    #filename {
+      position: absolute;
+      top: 12px;
+      left: 16px;
+      font-size: 13px;
+      color: #444;
+      font-weight: 600;
+      pointer-events: none;
+    }
+
+    .viewer-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: linear-gradient(transparent, rgba(10,10,15,0.9));
+    }
+    .controls-hint { font-size: 12px; color: #444; }
+    .btn-new {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #888;
+      font-family: inherit;
+      font-size: 13px;
+      padding: 6px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .btn-new:hover { background: rgba(255,255,255,0.14); color: #fff; }
+
+    .loading-overlay {
+      position: absolute; inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10,10,15,0.8);
+      gap: 14px;
+      font-size: 16px;
+      color: #00d4ff;
+    }
+    .progress-bar {
+      width: 220px;
+      height: 3px;
+      background: #1a1a2e;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+      width: 0%;
+      transition: width 0.2s;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <h1>3D Model Viewer</h1>
+  <p>Upload any 3D file and view it instantly — no account needed, nothing uploaded to a server</p>
+</div>
+
+<div id="drop-zone">
+  <div class="drop-icon">📦</div>
+  <div class="drop-title">Drop your 3D file here</div>
+  <div class="drop-sub">or click to browse your files</div>
+  <div class="format-badges">
+    <span class="badge">GLB</span>
+    <span class="badge">GLTF</span>
+    <span class="badge">STL</span>
+    <span class="badge">OBJ</span>
+  </div>
+  <button class="btn-upload" id="btn-browse">Choose File</button>
+  <input type="file" id="file-input" accept=".glb,.gltf,.stl,.obj">
+</div>
+
+<div id="viewer">
+  <div id="filename"></div>
+  <div class="loading-overlay" id="loading-overlay">
+    <div id="loading-text">Loading model…</div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  </div>
+  <div class="viewer-bar">
+    <span class="controls-hint">🖱️ Drag to rotate · Scroll to zoom · Right-click to pan</span>
+    <button class="btn-new" id="btn-new">Load New Model</button>
+  </div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+import { STLLoader } from 'three/addons/loaders/STLLoader.js';
+import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const dropZone    = document.getElementById('drop-zone');
+const fileInput   = document.getElementById('file-input');
+const viewerEl    = document.getElementById('viewer');
+const loadingOverlay = document.getElementById('loading-overlay');
+const loadingText = document.getElementById('loading-text');
+const progressFill = document.getElementById('progress-fill');
+const filenameEl  = document.getElementById('filename');
+
+// ── Scene ──────────────────────────────────────────────────
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x0a0a0f);
+scene.fog = new THREE.Fog(0x0a0a0f, 20, 80);
+
+const camera = new THREE.PerspectiveCamera(50, 1, 0.001, 2000);
+camera.position.set(4, 2.5, 4);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.4;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+viewerEl.appendChild(renderer.domElement);
+
+const pmremGenerator = new THREE.PMREMGenerator(renderer);
+scene.environment = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
+pmremGenerator.dispose();
+
+// Controls
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 1.5;
+controls.minDistance = 0.01;
+controls.maxDistance = 1000;
+
+// Lighting
+scene.add(new THREE.AmbientLight(0xffffff, 1.5));
+const dir1 = new THREE.DirectionalLight(0xffffff, 3.0);
+dir1.position.set(5, 10, 5);
+scene.add(dir1);
+const dir2 = new THREE.DirectionalLight(0xffffff, 2.0);
+dir2.position.set(-5, 5, -5);
+scene.add(dir2);
+const p1 = new THREE.PointLight(0x00d4ff, 2, 100);
+p1.position.set(-3, 2, 0);
+scene.add(p1);
+const p2 = new THREE.PointLight(0x7b2ff7, 2, 100);
+p2.position.set(3, -1, 2);
+scene.add(p2);
+
+const grid = new THREE.GridHelper(40, 80, 0x222244, 0x111122);
+scene.add(grid);
+
+// ── Loaders ────────────────────────────────────────────────
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/libs/draco/');
+const gltfLoader = new GLTFLoader();
+gltfLoader.setDRACOLoader(dracoLoader);
+const stlLoader = new STLLoader();
+const objLoader = new OBJLoader();
+
+// Default metallic material for formats without materials (STL/OBJ)
+const defaultMat = new THREE.MeshStandardMaterial({
+  color: 0x8899aa,
+  roughness: 0.35,
+  metalness: 0.7,
+  side: THREE.DoubleSide,
+});
+
+let currentModel = null;
+
+function clearModel() {
+  if (currentModel) {
+    scene.remove(currentModel);
+    currentModel = null;
+  }
+}
+
+function fitToScene(object) {
+  const box = new THREE.Box3().setFromObject(object);
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  const maxDim = Math.max(size.x, size.y, size.z) || 1;
+  const scale = 2.5 / maxDim;
+
+  object.position.copy(center).multiplyScalar(-scale);
+  object.scale.setScalar(scale);
+
+  const dist = 4;
+  camera.position.set(dist, dist * 0.6, dist);
+  controls.target.set(0, 0, 0);
+  controls.update();
+}
+
+function fixGLTFMaterials(object) {
+  object.traverse((child) => {
+    if (!child.isMesh) return;
+    const mats = Array.isArray(child.material) ? child.material : [child.material];
+    mats.forEach((mat, i) => {
+      if (mat.isMeshBasicMaterial) {
+        const replacement = new THREE.MeshStandardMaterial({
+          color: mat.color,
+          map: mat.map,
+          roughness: 0.5,
+          metalness: 0.1,
+          side: THREE.DoubleSide,
+        });
+        if (Array.isArray(child.material)) child.material[i] = replacement;
+        else child.material = replacement;
+      } else {
+        mat.side = THREE.DoubleSide;
+        if (mat.envMapIntensity !== undefined) mat.envMapIntensity = 2.0;
+        mat.needsUpdate = true;
+      }
+    });
+  });
+}
+
+function addToScene(object) {
+  clearModel();
+  fitToScene(object);
+  scene.add(object);
+  currentModel = object;
+  loadingOverlay.style.display = 'none';
+}
+
+function showProgress(pct, text) {
+  loadingOverlay.style.display = 'flex';
+  loadingText.textContent = text || 'Loading model…';
+  progressFill.style.width = (pct || 0) + '%';
+}
+
+function onProgress(xhr) {
+  if (xhr.total) {
+    const pct = Math.round(xhr.loaded / xhr.total * 100);
+    showProgress(pct, `Loading… ${pct}%`);
+  }
+}
+
+function onError(err) {
+  loadingText.textContent = 'Error loading file — check the console for details.';
+  progressFill.style.width = '0%';
+  console.error(err);
+}
+
+// ── Load file ──────────────────────────────────────────────
+function loadFile(file) {
+  const ext = file.name.split('.').pop().toLowerCase();
+  const supported = ['glb', 'gltf', 'stl', 'obj'];
+  if (!supported.includes(ext)) {
+    alert(`Unsupported format ".${ext}". Please use GLB, GLTF, STL, or OBJ.`);
+    return;
+  }
+
+  const url = URL.createObjectURL(file);
+
+  dropZone.style.display = 'none';
+  viewerEl.style.display = 'block';
+  filenameEl.textContent = file.name;
+  showProgress(0, 'Loading model…');
+  resizeRenderer();
+
+  if (ext === 'glb' || ext === 'gltf') {
+    gltfLoader.load(url, (gltf) => {
+      fixGLTFMaterials(gltf.scene);
+      addToScene(gltf.scene);
+      URL.revokeObjectURL(url);
+    }, onProgress, onError);
+
+  } else if (ext === 'stl') {
+    stlLoader.load(url, (geometry) => {
+      geometry.computeVertexNormals();
+      const mesh = new THREE.Mesh(geometry, defaultMat.clone());
+      const group = new THREE.Group();
+      group.add(mesh);
+      addToScene(group);
+      URL.revokeObjectURL(url);
+    }, onProgress, onError);
+
+  } else if (ext === 'obj') {
+    objLoader.load(url, (object) => {
+      object.traverse((child) => {
+        if (child.isMesh) child.material = defaultMat.clone();
+      });
+      addToScene(object);
+      URL.revokeObjectURL(url);
+    }, onProgress, onError);
+  }
+}
+
+// ── Events ─────────────────────────────────────────────────
+document.getElementById('btn-browse').addEventListener('click', (e) => {
+  e.stopPropagation();
+  fileInput.click();
+});
+
+dropZone.addEventListener('click', () => fileInput.click());
+
+fileInput.addEventListener('change', (e) => {
+  if (e.target.files[0]) loadFile(e.target.files[0]);
+});
+
+dropZone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropZone.classList.add('dragover');
+});
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropZone.classList.remove('dragover');
+  if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+});
+
+document.getElementById('btn-new').addEventListener('click', () => {
+  clearModel();
+  viewerEl.style.display = 'none';
+  dropZone.style.display = 'flex';
+  fileInput.value = '';
+});
+
+// ── Resize ─────────────────────────────────────────────────
+function resizeRenderer() {
+  const w = viewerEl.clientWidth;
+  const h = viewerEl.clientHeight;
+  renderer.setSize(w, h);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+}
+window.addEventListener('resize', resizeRenderer);
+
+// ── Animate ────────────────────────────────────────────────
+function animate() {
+  requestAnimationFrame(animate);
+  p1.intensity = 2 + Math.sin(Date.now() * 0.002) * 0.5;
+  p2.intensity = 2 + Math.cos(Date.now() * 0.002) * 0.5;
+  controls.update();
+  renderer.render(scene, camera);
+}
+animate();
+</script>
+
+</body>
+</html>
