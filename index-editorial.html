@@ -27,6 +27,7 @@
       <a href="advertise.html">Advertise</a>
       <a href="viewer.html">3D Viewer</a>
     </nav>
+    <button class="ed-theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">&#9790;</button>
   </div>
 </header>
 
@@ -77,48 +78,13 @@
       </div>
     </div>
 
-    <!-- Latest News — Card Grid -->
+    <!-- Latest News — Live RSS Feed -->
     <div class="ed-section-label">
       Latest News
       <a href="#">View All &rarr;</a>
     </div>
-    <div class="ed-card-grid">
-      <article class="ed-card">
-        <img class="ed-card-img" src="images/dmls-printing.png" alt="EOS M 400-4 multi-laser system">
-        <div class="ed-card-body">
-          <span class="ed-badge">Technology</span>
-          <div class="ed-card-meta">April 26, 2026 · 4 min read</div>
-          <h3><a href="#">EOS Unveils Next-Gen Quad-Laser System With 40% Faster Build Speeds</a></h3>
-          <p class="ed-card-excerpt">The M 400-4 Next targets aerospace serial production with a 400×400×400mm build volume and integrated quality monitoring at every layer.</p>
-        </div>
-      </article>
-      <article class="ed-card">
-        <img class="ed-card-img" src="images/metal-parts.png" alt="Titanium hip implant printed with EBM">
-        <div class="ed-card-body">
-          <span class="ed-badge">Medical</span>
-          <div class="ed-card-meta">April 25, 2026 · 3 min read</div>
-          <h3><a href="#">FDA Clears First Patient-Specific Titanium Spinal Cage Printed On-Site at Hospital</a></h3>
-          <p class="ed-card-excerpt">Mount Sinai's in-house metal printing lab delivered a custom Ti6Al4V spinal cage in under 72 hours from CT scan to implantation.</p>
-        </div>
-      </article>
-      <article class="ed-card">
-        <img class="ed-card-img" src="images/post-processing.png" alt="Automated post-processing cell">
-        <div class="ed-card-body">
-          <span class="ed-badge">Process</span>
-          <div class="ed-card-meta">April 24, 2026 · 5 min read</div>
-          <h3><a href="#">PostProcess Technologies Launches Fully Automated Metal Support Removal Cell</a></h3>
-          <p class="ed-card-excerpt">The new DEMI 800 eliminates manual support removal for DMLS/SLM parts, cutting post-processing time by 65% and reducing scrap rates.</p>
-        </div>
-      </article>
-      <article class="ed-card">
-        <img class="ed-card-img" src="images/metal-powder.png" alt="Metal powder characterization">
-        <div class="ed-card-body">
-          <span class="ed-badge">Materials</span>
-          <div class="ed-card-meta">April 23, 2026 · 6 min read</div>
-          <h3><a href="#">Carpenter Additive Qualifies New Copper Alloy Powder for High-Conductivity Applications</a></h3>
-          <p class="ed-card-excerpt">CuCr1Zr powder enables 3D printing of rocket combustion chambers and heat exchangers with 95% IACS conductivity after heat treatment.</p>
-        </div>
-      </article>
+    <div class="ed-card-grid" id="newsGrid">
+      <div style="grid-column: 1/-1; text-align:center; padding:2rem; color:var(--text-faint);">Loading latest news…</div>
     </div>
 
     <!-- More Stories — List Format -->
@@ -333,10 +299,123 @@
 </footer>
 
 <script>
-// Mobile nav toggle
+// ── Mobile nav toggle ──
 document.querySelector('.ed-nav-toggle')?.addEventListener('click', () => {
   document.querySelector('.ed-nav').classList.toggle('open');
 });
+
+// ── Theme toggle (light/dark) ──
+(function() {
+  const btn = document.getElementById('themeToggle');
+  const root = document.documentElement;
+
+  function setTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    localStorage.setItem('ed-theme', theme);
+    btn.innerHTML = theme === 'dark' ? '&#9790;' : '&#9728;';
+    btn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+  }
+
+  // Init: check saved preference, then system preference
+  const saved = localStorage.getItem('ed-theme');
+  if (saved) {
+    setTheme(saved);
+  } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+    setTheme('light');
+  } else {
+    setTheme('dark');
+  }
+
+  btn.addEventListener('click', () => {
+    const current = root.getAttribute('data-theme') || 'dark';
+    setTheme(current === 'dark' ? 'light' : 'dark');
+  });
+})();
+
+// ── RSS News Feed ──
+(function() {
+  var grid = document.getElementById('newsGrid');
+  if (!grid) return;
+
+  var feeds = [
+    { url: 'https://news.google.com/rss/search?q=metal+3d+printing+additive+manufacturing&hl=en-US&gl=US&ceid=US:en', name: 'Google News' },
+    { url: 'https://news.google.com/rss/search?q=DMLS+SLM+metal+printing&hl=en-US&gl=US&ceid=US:en', name: 'Google News' },
+    { url: 'https://news.google.com/rss/search?q=metal+additive+manufacturing+titanium+inconel&hl=en-US&gl=US&ceid=US:en', name: 'Google News' },
+    { url: 'https://www.metal-am.com/feed/', name: 'Metal AM' },
+    { url: 'https://3dprintingindustry.com/feed/', name: '3DPI' }
+  ];
+
+  var api = 'https://api.rss2json.com/v1/api.json?rss_url=';
+  var articles = [];
+  var loaded = 0;
+  var total = feeds.length;
+  var fallbackImgs = [
+    'images/hero-main.png','images/metal-parts.png','images/post-processing.png',
+    'images/dmls-printing.png','images/medical.png','images/metal-powder.png',
+    'images/aerospace.png','images/industrial.png'
+  ];
+
+  var timeout = setTimeout(function() { render(); }, 8000);
+
+  feeds.forEach(function(feed) {
+    fetch(api + encodeURIComponent(feed.url))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.status === 'ok' && data.items) {
+          data.items.forEach(function(item) {
+            articles.push({
+              title: item.title,
+              link: item.link,
+              desc: stripHtml(item.description).substring(0,140) + '…',
+              date: item.pubDate,
+              img: item.thumbnail || (item.enclosure && item.enclosure.link) || '',
+              source: feed.name
+            });
+          });
+        }
+      })
+      .catch(function(){})
+      .then(function() {
+        loaded++;
+        if (loaded === total) { clearTimeout(timeout); render(); }
+      });
+  });
+
+  function stripHtml(html) {
+    var d = document.createElement('div'); d.innerHTML = html;
+    return d.textContent || '';
+  }
+  function esc(s) {
+    var d = document.createElement('div'); d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+
+  function render() {
+    if (!articles.length) {
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--text-faint);">Unable to load news feeds.</div>';
+      return;
+    }
+
+    articles.sort(function(a,b){ return new Date(b.date) - new Date(a.date); });
+    var top = articles.slice(0, 8);
+    var html = '';
+    top.forEach(function(a, i) {
+      var d = new Date(a.date);
+      var ds = d.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
+      var img = a.img || fallbackImgs[i % fallbackImgs.length];
+      var fb = fallbackImgs[(i+1) % fallbackImgs.length];
+      html += '<article class="ed-card" style="cursor:pointer" onclick="window.open(\'' + esc(a.link) + '\',\'_blank\',\'noopener\')">' +
+        '<img class="ed-card-img" src="' + esc(img) + '" alt="" loading="lazy" onerror="this.onerror=null;this.src=\'' + fb + '\'">' +
+        '<div class="ed-card-body">' +
+          '<span class="ed-badge">' + esc(a.source) + '</span>' +
+          '<div class="ed-card-meta">' + ds + '</div>' +
+          '<h3><a href="' + esc(a.link) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">' + esc(a.title) + '</a></h3>' +
+          '<p class="ed-card-excerpt">' + esc(a.desc) + '</p>' +
+        '</div></article>';
+    });
+    grid.innerHTML = html;
+  }
+})();
 </script>
 </body>
 </html>

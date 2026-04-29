@@ -3,12 +3,21 @@
    Inspired by 3dnatives.com, modernized
    ============================================ */
 
-/* ── Tokens ──────────────────────────────────── */
+/* ── Shared Tokens ───────────────────────────── */
 :root {
-  --accent: #00d9ff;
-  --accent-dark: #00a8cc;
-  --accent-dim: rgba(0,217,255,0.12);
-  --red: #ff4444;
+  --accent: #00a8cc;
+  --accent-dark: #008fad;
+  --accent-dim: rgba(0,168,204,0.12);
+  --red: #e53e3e;
+  --radius: 8px;
+  --radius-sm: 4px;
+  --font-display: 'Oswald', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ── Dark Mode (default) ─────────────────────── */
+:root, [data-theme="dark"] {
   --bg: #08090f;
   --bg-surface: #0e1019;
   --bg-card: #141620;
@@ -17,15 +26,62 @@
   --text: #e2e4e8;
   --text-dim: #8a8f9d;
   --text-faint: #555a68;
+  --heading: #ffffff;
   --border: rgba(255,255,255,0.06);
-  --border-accent: rgba(0,217,255,0.15);
+  --border-accent: rgba(0,168,204,0.2);
   --shadow: 0 1px 3px rgba(0,0,0,0.4);
   --shadow-hover: 0 8px 24px rgba(0,0,0,0.5);
-  --radius: 8px;
-  --radius-sm: 4px;
-  --font-display: 'Oswald', sans-serif;
-  --font-body: 'Inter', sans-serif;
-  --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
+  --header-bg: rgba(8,9,15,0.92);
+  --badge-bg: rgba(0,168,204,0.12);
+  --input-bg: #0a0b12;
+}
+
+/* ── Light Mode ──────────────────────────────── */
+[data-theme="light"] {
+  --accent: #0077a8;
+  --accent-dark: #005f85;
+  --accent-dim: rgba(0,119,168,0.08);
+  --bg: #f5f6f8;
+  --bg-surface: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f0f1f3;
+  --bg-sidebar: #fafbfc;
+  --text: #2d3748;
+  --text-dim: #5a6577;
+  --text-faint: #8e96a4;
+  --heading: #1a202c;
+  --border: rgba(0,0,0,0.08);
+  --border-accent: rgba(0,119,168,0.2);
+  --shadow: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-hover: 0 8px 24px rgba(0,0,0,0.1);
+  --header-bg: rgba(255,255,255,0.95);
+  --badge-bg: rgba(0,119,168,0.08);
+  --input-bg: #f0f1f3;
+}
+
+/* System preference when no manual choice */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --accent: #0077a8;
+    --accent-dark: #005f85;
+    --accent-dim: rgba(0,119,168,0.08);
+    --bg: #f5f6f8;
+    --bg-surface: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f0f1f3;
+    --bg-sidebar: #fafbfc;
+    --text: #2d3748;
+    --text-dim: #5a6577;
+    --text-faint: #8e96a4;
+    --heading: #1a202c;
+    --border: rgba(0,0,0,0.08);
+    --border-accent: rgba(0,119,168,0.2);
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-hover: 0 8px 24px rgba(0,0,0,0.1);
+    --header-bg: rgba(255,255,255,0.95);
+    --badge-bg: rgba(0,119,168,0.08);
+    --input-bg: #f0f1f3;
+  }
 }
 
 /* ── Reset ───────────────────────────────────── */
@@ -34,7 +90,7 @@ html { scroll-behavior:smooth; font-size:16px; }
 body {
   font-family: var(--font-body);
   color: var(--text);
-  background: var(--bg);
+  background: var(--input-bg);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -43,7 +99,7 @@ a { color: inherit; text-decoration: none; }
 img { max-width: 100%; display: block; }
 
 /* ── Typography ──────────────────────────────── */
-h1,h2,h3,h4 { font-family: var(--font-display); font-weight: 600; line-height: 1.15; color: #fff; }
+h1,h2,h3,h4 { font-family: var(--font-display); font-weight: 600; line-height: 1.15; color: var(--heading); }
 h1 { font-size: clamp(2rem, 5vw, 3rem); letter-spacing: 0.01em; }
 h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); }
 h3 { font-size: clamp(1.1rem, 2vw, 1.4rem); }
@@ -52,7 +108,7 @@ h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color
 /* ── Header ──────────────────────────────────── */
 .ed-header {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(8,9,15,0.92);
+  background: var(--header-bg);
   backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--border);
 }
@@ -69,7 +125,7 @@ h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color
   font-family: var(--font-display);
   font-size: 1.15rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--heading);
   letter-spacing: 0.04em;
   display: flex; align-items: center; gap: 0.5rem;
 }
@@ -86,7 +142,7 @@ h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color
   line-height: 56px;
   position: relative;
 }
-.ed-nav a:hover, .ed-nav a.active { color: #fff; }
+.ed-nav a:hover, .ed-nav a.active { color: var(--heading); }
 .ed-nav a.active::after {
   content: ''; position: absolute; bottom: 0; left: 0.9rem; right: 0.9rem;
   height: 2px; background: var(--accent);
@@ -95,6 +151,20 @@ h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color
   display: none; background: none; border: none; color: var(--text);
   font-size: 1.5rem; cursor: pointer; padding: 0.5rem;
 }
+
+/* Theme toggle */
+.ed-theme-toggle {
+  background: none; border: 1px solid var(--border);
+  color: var(--text-dim); cursor: pointer;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  transition: all var(--transition);
+  margin-left: 0.5rem;
+  flex-shrink: 0;
+}
+.ed-theme-toggle:hover { border-color: var(--accent); color: var(--accent); }
 
 /* ── Breadcrumbs ─────────────────────────────── */
 .ed-breadcrumbs {
@@ -139,6 +209,9 @@ h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color
   position: absolute; inset: 0;
   background: linear-gradient(0deg, rgba(8,9,15,0.95) 0%, rgba(8,9,15,0.3) 50%, transparent 100%);
 }
+[data-theme="light"] .ed-hero-overlay {
+  background: linear-gradient(0deg, rgba(245,246,248,0.97) 0%, rgba(245,246,248,0.4) 50%, transparent 100%);
+}
 .ed-hero-content {
   position: absolute;
   bottom: 0; left: 0; right: 0;
@@ -146,7 +219,7 @@ h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color
 }
 .ed-hero .ed-badge { margin-bottom: 0.75rem; }
 .ed-hero h1 { margin-bottom: 0.5rem; }
-.ed-hero h1 a { color: #fff; transition: color var(--transition); }
+.ed-hero h1 a { color: var(--heading); transition: color var(--transition); }
 .ed-hero h1 a:hover { color: var(--accent); }
 .ed-hero-meta {
   font-size: 0.8rem;
@@ -170,7 +243,7 @@ h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color
   letter-spacing: 0.1em;
   padding: 0.25rem 0.6rem;
   border-radius: var(--radius-sm);
-  background: var(--accent-dim);
+  background: var(--badge-bg);
   color: var(--accent);
   line-height: 1;
 }
@@ -183,7 +256,7 @@ h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #fff;
+  color: var(--heading);
   margin-bottom: 1.25rem;
   padding-bottom: 0.75rem;
   border-bottom: 2px solid var(--accent);
@@ -227,7 +300,7 @@ h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color
 .ed-card-body { padding: 1.25rem; }
 .ed-card-body .ed-badge { margin-bottom: 0.65rem; }
 .ed-card-body h3 { margin-bottom: 0.5rem; }
-.ed-card-body h3 a { color: #fff; transition: color var(--transition); }
+.ed-card-body h3 a { color: var(--heading); transition: color var(--transition); }
 .ed-card-body h3 a:hover { color: var(--accent); }
 .ed-card-meta {
   font-size: 0.75rem;
@@ -262,7 +335,7 @@ h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color
   width: 100%;
 }
 .ed-list-item h3 { font-size: 1.05rem; margin-bottom: 0.35rem; }
-.ed-list-item h3 a { color: #fff; transition: color var(--transition); }
+.ed-list-item h3 a { color: var(--heading); transition: color var(--transition); }
 .ed-list-item h3 a:hover { color: var(--accent); }
 
 /* ── Sidebar ─────────────────────────────────── */
@@ -284,7 +357,7 @@ h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color
 .ed-newsletter input[type="email"] {
   width: 100%;
   padding: 0.65rem 0.85rem;
-  background: var(--bg);
+  background: var(--input-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   color: var(--text);
@@ -335,7 +408,7 @@ h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color
 .ed-network-links a {
   font-size: 0.7rem;
   padding: 0.3rem 0.6rem;
-  background: var(--bg);
+  background: var(--input-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   color: var(--text-dim);
