@@ -1,383 +1,421 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="3D Printmetal - Precision Metal Parts, Printed to Perfection. Advanced metal additive manufacturing for aerospace, medical, and industrial applications.">
-    <meta name="keywords" content="3d metal printing, additive manufacturing, DMLS, metal prototyping, precision engineering, max davis, ben stagl, ally reza, chilab, chilab studio, titobi, chicago, manufacturing, functional, 3d, prototype">
-    <meta property="og:title" content="3D PRINTMETAL | Precision Metal Parts, Printed to Perfection">
-    <meta property="og:description" content="3D Printmetal - Precision Metal Parts, Printed to Perfection. Advanced metal additive manufacturing for aerospace, medical, and industrial applications.">
-    <meta name="author" content="Max Davis, Ben Stagl, Ally Reza - ChiLab Studio">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="images/hero-main.png">
-    <title>3D PRINTMETAL | Precision Metal Parts, Printed to Perfection</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-<script type="application/ld+json">
-[
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "3D PRINTMETAL",
-    "url": "https://3dprintmetal.com",
-    "description": "3D Printmetal - Precision Metal Parts, Printed to Perfection. Advanced metal additive manufacturing for aerospace, medical, and industrial applications.",
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "contactType": "customer service",
-      "url": "https://3dprintmetal.com/contact.html"
-    }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "3D PRINTMETAL",
-    "url": "https://3dprintmetal.com"
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "DMLS / SLM Printing",
-    "provider": {
-      "@type": "Organization",
-      "name": "3D PRINTMETAL",
-      "url": "https://3dprintmetal.com"
-    },
-    "url": "https://3dprintmetal.com/services.html"
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Rapid Prototyping",
-    "provider": {
-      "@type": "Organization",
-      "name": "3D PRINTMETAL",
-      "url": "https://3dprintmetal.com"
-    },
-    "url": "https://3dprintmetal.com/services.html"
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    "name": "Post-Processing",
-    "provider": {
-      "@type": "Organization",
-      "name": "3D PRINTMETAL",
-      "url": "https://3dprintmetal.com"
-    },
-    "url": "https://3dprintmetal.com/services.html"
-  }
-]
-</script>
-    <!-- ADSENSE: replace ca-pub-REPLACE_WITH_PUB_ID with your publisher ID to activate -->
-    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-REPLACE_WITH_PUB_ID" crossorigin="anonymous"></script> -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="3D Printmetal — Metal additive manufacturing news, research, and services. DMLS, SLM, EBM coverage for aerospace, medical, and industrial applications.">
+  <title>3D PRINTMETAL — Metal Additive Manufacturing News &amp; Services</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/editorial.css">
 </head>
 <body>
-    <div class="grain-overlay"></div>
 
-    <header class="site-header">
-        <nav class="navbar">
-            <div class="nav-container">
-                <a href="index.html" class="nav-logo">
-                    <span class="logo-bracket">[</span><span class="logo-text">3D PRINTMETAL</span><span class="logo-bracket">]</span>
-                </a>
-                <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-                    <span class="hamburger"></span>
-                    <span class="hamburger"></span>
-                    <span class="hamburger"></span>
-                </button>
-                <ul class="nav-menu">
-                    <li><a href="index.html" class="nav-link active">Home</a></li>
-                    <li><a href="about.html" class="nav-link">About</a></li>
-                    <li><a href="services.html" class="nav-link">Services</a></li>
-                    <li><a href="contact.html" class="nav-link">Contact</a></li>
-                    <li><a href="advertise.html" class="nav-link">Advertise</a></li>
-                    <li><a href="viewer.html" class="nav-link">3D Viewer</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+<!-- ── Header ─────────────────────────────────── -->
+<header class="ed-header">
+  <div class="ed-header-inner">
+    <a href="index.html" class="ed-logo">
+      3D<span class="ed-logo-accent">PRINT</span>METAL
+    </a>
+    <button class="ed-nav-toggle" aria-label="Menu" onclick="document.querySelector('.ed-nav').classList.toggle('open')">&#9776;</button>
+    <nav class="ed-nav">
+      <a href="index.html" class="active">News</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="advertise.html">Advertise</a>
+      <a href="viewer.html">3D Viewer</a>
+    </nav>
+    <button class="ed-theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">&#9790;</button>
+  </div>
+</header>
 
-    <main>
-        <section class="hero">
-            <div class="hero-background">
-                <img src="images/hero-main.png" alt="Metal 3D Printing Sparks" loading="lazy">
-                <div class="hero-overlay"></div>
-            </div>
-            <div class="hero-content">
-                <div class="hero-badge">ADVANCED METAL ADDITIVE MANUFACTURING</div>
-                <h1 class="hero-title">
-                    <span class="title-line">3D</span>
-                        <span class="title-line highlight">PRINTMETAL</span>
-                </h1>
-                <p class="hero-subtitle">Precision Metal Parts, Printed to Perfection. From rapid prototypes to production-grade components using DMLS, SLM, and EBM technologies.</p>
-                <div class="hero-actions">
-                    <a href="services.html" class="btn btn-primary">Explore Services</a>
-                    <a href="contact.html" class="btn btn-secondary">Get a Quote</a>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">99.7%</div>
-                        <div class="stat-label">Density</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">&plusmn;0.1mm</div>
-                        <div class="stat-label">Tolerance</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">24/7</div>
-                        <div class="stat-label">Production</div>
-                    </div>
-                </div>
-            </div>
-            <div class="scroll-indicator">
-                <div class="scroll-line"></div>
-                <span>SCROLL</span>
-            </div>
-        </section>
+<!-- ── Breadcrumbs ────────────────────────────── -->
+<div class="ed-breadcrumbs">
+  <a href="index.html">Home</a> <span>/</span> Metal 3D Printing News
+</div>
 
-        <section class="news-section">
-            <div class="container">
-                <div class="section-header center">
-                    <span class="section-label">INDUSTRY NEWS</span>
-                    <h2>Latest in Metal 3D Printing</h2>
-                </div>
-                <div class="news-grid" id="newsGrid">
-                    <div class="news-loading">Loading latest news...</div>
-                </div>
-            </div>
-        </section>
+<!-- ── Main Layout ────────────────────────────── -->
+<div class="ed-layout">
+  <div class="ed-main">
 
-        <section class="process-section">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-label">CAPABILITIES</span>
-                    <h2 class="section-title">Metal Printing Technologies</h2>
-                </div>
-                <div class="process-grid">
-                    <div class="process-card animate-in">
-                        <div class="card-number">01</div>
-                        <div class="card-image">
-                            <img src="images/dmls-printing.png" alt="DMLS Metal 3D Printing" loading="lazy">
-                        </div>
-                        <h3>DMLS / SLM Printing</h3>
-                        <p>Direct Metal Laser Sintering and Selective Laser Melting for fully dense metal parts in titanium, stainless steel, Inconel, and aluminum alloys.</p>
-                    </div>
-                    <div class="process-card animate-in">
-                        <div class="card-number">02</div>
-                        <div class="card-image">
-                            <img src="images/metal-parts.png" alt="Metal Parts and Components" loading="lazy">
-                        </div>
-                        <h3>Rapid Prototyping</h3>
-                        <p>Functional metal prototypes in days, not weeks. Iterate designs quickly with production-grade materials and mechanical properties.</p>
-                    </div>
-                    <div class="process-card animate-in">
-                        <div class="card-number">03</div>
-                        <div class="card-image">
-                            <img src="images/post-processing.png" alt="CNC Post-Processing" loading="lazy">
-                        </div>
-                        <h3>Post-Processing</h3>
-                        <p>Complete finishing services including CNC machining, heat treatment, surface finishing, and quality inspection to meet exact specifications.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-    <!-- Ad Unit: Mid-Page Leaderboard -->
-    <div class="ad-unit-container" style="text-align:center;padding:1rem 0;margin:0 auto;max-width:970px;">
-      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-REPLACE_WITH_PUB_ID" data-ad-slot="REPLACE_WITH_SLOT_ID_1" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
-      <!-- <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
-    </div>
-        <section class="materials-section">
-            <div class="container-wide">
-                <div class="materials-content">
-                    <div class="materials-info">
-                        <span class="section-label">MATERIALS</span>
-                        <h2>Industrial-Grade Metal Powders</h2>
-                        <p>We work with a wide range of metal powders optimized for additive manufacturing, each selected for specific mechanical, thermal, and chemical properties.</p>
-                        <ul class="materials-list">
-                            <li><span class="material-icon">&#9679;</span> Titanium Ti6Al4V (Grade 5)</li>
-                            <li><span class="material-icon">&#9679;</span> Stainless Steel 316L &amp; 17-4PH</li>
-                            <li><span class="material-icon">&#9679;</span> Inconel 625 &amp; 718</li>
-                            <li><span class="material-icon">&#9679;</span> Aluminum AlSi10Mg</li>
-                            <li><span class="material-icon">&#9679;</span> Cobalt Chrome CoCrMo</li>
-                            <li><span class="material-icon">&#9679;</span> Tool Steel H13 &amp; Maraging</li>
-                        </ul>
-                        <a href="services.html" class="btn btn-outline">View All Services</a>
-                    </div>
-                    <div class="materials-visual">
-                        <img src="images/metal-powder.png" alt="Metal Powder for 3D Printing" loading="lazy">
-                        <div class="visual-accent"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="industries-section">
-            <div class="container">
-                <div class="section-header center">
-                    <span class="section-label">INDUSTRIES</span>
-                    <h2>Trusted Across Sectors</h2>
-                </div>
-                <div class="industries-grid">
-                    <div class="industry-card animate-in">
-                        <img src="images/aerospace.png" alt="Aerospace 3D Printing" style="width:100%;height:200px;object-fit:cover;border-radius:8px;margin-bottom:1rem;">
-                        <h3>Aerospace</h3>
-                        <p>Lightweight turbine blades, brackets, and structural components meeting AS9100 standards</p>
-                    </div>
-                    <div class="industry-card animate-in">
-                        <img src="images/medical.png" alt="Medical 3D Printing" style="width:100%;height:200px;object-fit:cover;border-radius:8px;margin-bottom:1rem;">
-                        <h3>Medical</h3>
-                        <p>Biocompatible implants, surgical instruments, and custom prosthetics in titanium and CoCr</p>
-                    </div>
-                    <div class="industry-card animate-in">
-                        <img src="images/industrial.png" alt="Industrial 3D Printing" style="width:100%;height:200px;object-fit:cover;border-radius:8px;margin-bottom:1rem;">
-                        <h3>Industrial</h3>
-                        <p>Custom tooling, conformal cooling inserts, and production fixtures with complex geometries</p>
-                    </div>
-                    <div class="industry-card animate-in">
-                        <img src="images/automotive.png" alt="Automotive 3D Printing" style="width:100%;height:200px;object-fit:cover;border-radius:8px;margin-bottom:1rem;">
-                        <h3>Automotive</h3>
-                        <p>Performance brake calipers, turbocharger housings, and topology-optimized components</p>
-                    </div>
-                    <div class="industry-card animate-in">
-                        <img src="images/jewelry.png" alt="Jewelry 3D Printing" style="width:100%;height:200px;object-fit:cover;border-radius:8px;margin-bottom:1rem;">
-                        <h3>Jewelry &amp; Design</h3>
-                        <p>Intricate lattice rings, collectible objects, and precision-cast precious metal pieces</p>
-                    </div>
-                    <div class="industry-card animate-in">
-                        <img src="images/lattice-dome.png" alt="Architecture 3D Printing" style="width:100%;height:200px;object-fit:cover;border-radius:8px;margin-bottom:1rem;">
-                        <h3>Architecture</h3>
-                        <p>Parametric facades, structural nodes, lattice domes, and decorative metalwork</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="affiliate-cta" style="background:linear-gradient(135deg,#0d1117 0%,#1a1f2e 100%);padding:3rem 2rem;text-align:center;border-top:1px solid #1e2a3a;">
-            <div style="max-width:640px;margin:0 auto;">
-                <span style="font-size:0.7rem;letter-spacing:0.15em;color:#5a9fd4;text-transform:uppercase;">Get a Quote</span>
-                <h2 style="color:#fff;font-size:1.8rem;margin:0.5rem 0 0.75rem;">Need metal parts quoted?</h2>
-                <p style="color:#8899aa;margin-bottom:1.5rem;">Describe your project — materials, tolerances, quantity, and timeline. Our team responds to all enquiries within 24 hours.</p>
-                <a href="contact.html"
-                   style="display:inline-block;padding:0.9rem 2.5rem;background:#5a9fd4;color:#000;font-weight:700;border-radius:4px;text-decoration:none;font-size:1rem;">
-                    Request a Quote
-                </a>
-                <p style="color:#445;font-size:0.75rem;margin-top:0.75rem;">Direct response within 24 hours</p>
-            </div>
-        </section>
-        <section class="gallery-section" style="background:#0a0e17;padding:4rem 2rem;">
-            <div class="container">
-                <div class="section-header center">
-                    <span class="section-label">GALLERY</span>
-                    <h2 style="color:#fff;">The Art of Metal Printing</h2>
-                </div>
-                <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem;margin-top:2rem;">
-                    <img src="images/pavilion.png" alt="Parametric Pavilion" style="width:100%;border-radius:8px;aspect-ratio:1;object-fit:cover;" loading="lazy">
-                    <img src="images/sculpture.png" alt="3D Printed Sculpture" style="width:100%;border-radius:8px;aspect-ratio:1;object-fit:cover;" loading="lazy">
-                    <img src="images/facade-screen.png" alt="Architectural Screen" style="width:100%;border-radius:8px;aspect-ratio:1;object-fit:cover;" loading="lazy">
-                    <img src="images/chair-frame.png" alt="Generative Chair" style="width:100%;border-radius:8px;aspect-ratio:1;object-fit:cover;" loading="lazy">
-                    <img src="images/light-fixture.png" alt="Metal Light Fixture" style="width:100%;border-radius:8px;aspect-ratio:1;object-fit:cover;" loading="lazy">
-                    <img src="images/spinal-cage.png" alt="Medical Spinal Cage" style="width:100%;border-radius:8px;aspect-ratio:1;object-fit:cover;" loading="lazy">
-                    <img src="images/impeller.png" alt="Industrial Impeller" style="width:100%;border-radius:8px;aspect-ratio:1;object-fit:cover;" loading="lazy">
-                    <img src="images/cranial-plate.png" alt="Cranial Implant" style="width:100%;border-radius:8px;aspect-ratio:1;object-fit:cover;" loading="lazy">
-                    <img src="images/antenna-bracket.png" alt="Aerospace Bracket" style="width:100%;border-radius:8px;aspect-ratio:1;object-fit:cover;" loading="lazy">
-                </div>
-            </div>
-        </section>
-
-        <section class="newsletter-section" style="background:#0d0d0d;padding:3rem 2rem;text-align:center;border-top:1px solid #1a1a1a;">
-            <div style="max-width:520px;margin:0 auto;">
-                <span style="font-size:0.7rem;letter-spacing:0.15em;color:#666;text-transform:uppercase;">Stay Informed</span>
-                <h2 style="color:#fff;font-size:1.6rem;margin:0.5rem 0 0.75rem;">Industry Updates to Your Inbox</h2>
-                <p style="color:#888;font-size:0.9rem;margin-bottom:1.5rem;">New techniques, material breakthroughs, and industry news — delivered monthly. No spam.</p>
-                <form action="https://api.web3forms.com/submit" method="POST"
-                      style="display:flex;gap:0.5rem;flex-wrap:wrap;justify-content:center;"
-                      onsubmit="this.querySelector('button').textContent='Subscribed!';this.querySelector('button').disabled=true;">
-                    <input type="hidden" name="access_key" value="6f33053b-6d08-414b-9615-665f88c98da8">
-                    <input type="hidden" name="subject" value="Newsletter Signup">
-                    <input type="hidden" name="from_name" value="Newsletter Signup">
-                    <input type="email" name="email" placeholder="your@email.com" required
-                           style="flex:1;min-width:220px;padding:0.7rem 1rem;background:#111;border:1px solid #333;color:#fff;border-radius:4px;font-size:0.95rem;">
-                    <button type="submit"
-                            style="padding:0.7rem 1.5rem;background:#fff;color:#000;border:none;border-radius:4px;font-weight:600;font-size:0.95rem;cursor:pointer;white-space:nowrap;">
-                        Subscribe
-                    </button>
-                </form>
-            </div>
-        </section>
-
-        <section class="cta-section">
-            <div class="cta-content">
-                <h2>Ready to Get Started?</h2>
-                <p>Upload your CAD file or contact us today to discover how metal additive manufacturing can transform your production.</p>
-                <a href="contact.html" class="btn btn-large">Start Your Project</a>
-            </div>
-            <div class="cta-background">
-                <img src="images/industrial.png" alt="Industrial Manufacturing" loading="lazy">
-            </div>
-        </section>
-    </main>
-
-    <!-- Ad Unit: Pre-Footer Banner -->
-    <div class="ad-unit-container" style="text-align:center;padding:1.5rem 0;margin:0 auto;max-width:970px;">
-      <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-REPLACE_WITH_PUB_ID" data-ad-slot="REPLACE_WITH_SLOT_ID_2" data-ad-format="auto" data-full-width-responsive="true"></ins> -->
-      <!-- <script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
-    </div>
-    <footer class="site-footer">
-        <div class="footer-container">
-            <div class="footer-main">
-                <div class="footer-brand">
-                    <div class="footer-logo">3D PRINTMETAL</div>
-                    <p>Precision Metal Parts, Printed to Perfection</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Company</h4>
-                        <ul>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Services</h4>
-                        <ul>
-                            <li><a href="services.html">DMLS / SLM Printing</a></li>
-                            <li><a href="services.html">Rapid Prototyping</a></li>
-                            <li><a href="services.html">Post-Processing</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Contact</h4>
-                        <ul>
-                            <li><a href="contact.html">Contact Us</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 3D PRINTMETAL. All rights reserved.</p>
-            </div>
+    <!-- Featured Story -->
+    <article class="ed-hero">
+      <img src="images/hero-main.png" alt="Hyperion Systems 3D printed construction">
+      <div class="ed-hero-overlay"></div>
+      <div class="ed-hero-content">
+        <span class="ed-badge">Breaking</span>
+        <h1><a href="#">Hyperion Systems Prints First Load-Bearing Metal Structure for Residential Construction</a></h1>
+        <div class="ed-hero-meta">
+          <span>April 28, 2026</span>
+          <span>·</span>
+          <span>5 min read</span>
+          <span>·</span>
+          <span>By PrintWire Editorial</span>
         </div>
-    </footer>
+        <p class="ed-hero-excerpt">The Dubai-based startup used a proprietary DED system to print a 12-meter steel truss in under 18 hours — bypassing traditional welding entirely. Certified to Eurocode 3.</p>
+      </div>
+    </article>
 
-    <script src="js/main.js"></script>
-
-    <div class="related-networks" style="background:#0a0a0a;border-top:1px solid #222;padding:1rem;text-align:center;">
-      <span style="color:#666;font-size:0.75rem;margin-right:0.5rem;">NETWORK:</span>
-      <a href="https://metalpowder.co" style="color:#aaa;text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Metal Powder</a>
-      <a href="https://3dprinttissue.com" style="color:#aaa;text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Bioprinting</a>
-      <a href="https://3dprintfood.com" style="color:#aaa;text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Food Printing</a>
-      <a href="https://3dprintceramic.com" style="color:#aaa;text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Ceramic Printing</a>
-      <a href="https://3dprintcircuitry.com" style="color:#aaa;text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Electronics Printing</a>
-      <a href="https://3dprintjewelry.com" style="color:#aaa;text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Jewelry Printing</a>
-      <a href="https://3dprintarchitecture.com" style="color:#aaa;text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Architecture Printing</a>
-      <a href="https://3dprintpipes.com" style="color:#aaa;text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Industrial Printing</a>
-      <a href="https://sendcutship.com" style="color:#aaa;text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">Manufacturing Services</a>
-      <a href="https://dmls3d.com" style="color:#aaa;text-decoration:none;margin:0 0.5rem;font-size:0.8rem;">DMLS3D</a>
+    <!-- Stats Bar -->
+    <div class="ed-stats">
+      <div class="ed-stat">
+        <div class="ed-stat-value">99.7%</div>
+        <div class="ed-stat-label">Part Density</div>
+      </div>
+      <div class="ed-stat">
+        <div class="ed-stat-value">±0.1mm</div>
+        <div class="ed-stat-label">Tolerance</div>
+      </div>
+      <div class="ed-stat">
+        <div class="ed-stat-value">6</div>
+        <div class="ed-stat-label">Alloy Families</div>
+      </div>
+      <div class="ed-stat">
+        <div class="ed-stat-value">48hr</div>
+        <div class="ed-stat-label">Quote Turnaround</div>
+      </div>
     </div>
+
+    <!-- Latest News — Live RSS Feed -->
+    <div class="ed-section-label">
+      Latest News
+      <a href="#">View All &rarr;</a>
+    </div>
+    <div class="ed-card-grid" id="newsGrid">
+      <div style="grid-column: 1/-1; text-align:center; padding:2rem; color:var(--text-faint);">Loading latest news…</div>
+    </div>
+
+    <!-- More Stories — List Format -->
+    <div class="ed-section-label">
+      Analysis &amp; Deep Dives
+      <a href="#">View All &rarr;</a>
+    </div>
+    <div class="ed-list">
+      <article class="ed-list-item">
+        <img src="images/aerospace.png" alt="Topology-optimized aerospace bracket">
+        <div>
+          <span class="ed-badge">Aerospace</span>
+          <div class="ed-card-meta">April 22, 2026 · 8 min read</div>
+          <h3><a href="#">Why Boeing Shifted From Casting to DMLS for 787 Nacelle Brackets — And What It Means for the Supply Chain</a></h3>
+          <p class="ed-card-excerpt">The decision to consolidate 17 cast parts into 3 printed components saved 4.2kg per aircraft — but the real story is what it does to Tier 2 suppliers.</p>
+        </div>
+      </article>
+      <article class="ed-list-item">
+        <img src="images/impeller.png" alt="Inconel 718 impeller">
+        <div>
+          <span class="ed-badge">Materials</span>
+          <div class="ed-card-meta">April 20, 2026 · 7 min read</div>
+          <h3><a href="#">Inconel 718 vs. Haynes 282: Choosing the Right Superalloy for High-Temperature Metal AM</a></h3>
+          <p class="ed-card-excerpt">Both survive 700°C+, but their printability, post-processing requirements, and fatigue performance diverge significantly. A materials engineer's comparison.</p>
+        </div>
+      </article>
+      <article class="ed-list-item">
+        <img src="images/industrial.png" alt="Conformal cooling insert">
+        <div>
+          <span class="ed-badge">Industrial</span>
+          <div class="ed-card-meta">April 18, 2026 · 10 min read</div>
+          <h3><a href="#">Conformal Cooling 2026: The ROI Data From 200+ Injection Mold Inserts</a></h3>
+          <p class="ed-card-excerpt">We aggregated cycle-time data from 14 service bureaus. The average reduction: 32%. But the variance tells a more interesting story.</p>
+        </div>
+      </article>
+    </div>
+
+    <!-- Industries Section -->
+    <div class="ed-section-label">
+      Industries We Cover
+    </div>
+    <div class="ed-card-grid" style="grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2.5rem;">
+      <a href="#" class="ed-card" style="text-align:center;">
+        <img class="ed-card-img" src="images/aerospace.png" alt="Aerospace">
+        <div class="ed-card-body"><h3>Aerospace</h3></div>
+      </a>
+      <a href="#" class="ed-card" style="text-align:center;">
+        <img class="ed-card-img" src="images/medical.png" alt="Medical">
+        <div class="ed-card-body"><h3>Medical</h3></div>
+      </a>
+      <a href="#" class="ed-card" style="text-align:center;">
+        <img class="ed-card-img" src="images/industrial.png" alt="Industrial">
+        <div class="ed-card-body"><h3>Industrial</h3></div>
+      </a>
+      <a href="#" class="ed-card" style="text-align:center;">
+        <img class="ed-card-img" src="images/automotive.png" alt="Automotive">
+        <div class="ed-card-body"><h3>Automotive</h3></div>
+      </a>
+      <a href="#" class="ed-card" style="text-align:center;">
+        <img class="ed-card-img" src="images/jewelry.png" alt="Jewelry">
+        <div class="ed-card-body"><h3>Jewelry</h3></div>
+      </a>
+      <a href="#" class="ed-card" style="text-align:center;">
+        <img class="ed-card-img" src="images/lattice-dome.png" alt="Architecture">
+        <div class="ed-card-body"><h3>Architecture</h3></div>
+      </a>
+    </div>
+
+    <!-- Load More -->
+    <div class="ed-load-more">
+      <button>Load More Articles</button>
+    </div>
+
+  </div>
+
+  <!-- ── Sidebar ─────────────────────────────── -->
+  <aside class="ed-sidebar">
+
+    <!-- Newsletter -->
+    <div class="ed-sidebar-block ed-newsletter">
+      <h4>Newsletter</h4>
+      <p>Metal AM news, material breakthroughs, and industry analysis — delivered weekly. No spam.</p>
+      <form action="https://api.web3forms.com/submit" method="POST" onsubmit="this.querySelector('button').textContent='Subscribed!';this.querySelector('button').disabled=true;">
+        <input type="hidden" name="access_key" value="6f33053b-6d08-414b-9615-665f88c98da8">
+        <input type="hidden" name="subject" value="Newsletter Signup — 3dprintmetal.com">
+        <input type="hidden" name="from_name" value="Newsletter Signup">
+        <input type="hidden" name="ccs" value="printwire@gmail.com">
+        <input type="email" name="email" placeholder="your@email.com" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+
+    <!-- Popular Stories -->
+    <div class="ed-sidebar-block">
+      <h4>Most Read</h4>
+      <div class="ed-popular-item">
+        <span class="ed-popular-num">1</span>
+        <div>
+          <h3><a href="#">Ti6Al4V Fatigue Data: What 500 Test Bars Reveal About As-Built vs. HIP'd Parts</a></h3>
+          <div class="ed-popular-meta">12.4K reads</div>
+        </div>
+      </div>
+      <div class="ed-popular-item">
+        <span class="ed-popular-num">2</span>
+        <div>
+          <h3><a href="#">The Real Cost Per Part: DMLS vs. Investment Casting at Volume</a></h3>
+          <div class="ed-popular-meta">9.8K reads</div>
+        </div>
+      </div>
+      <div class="ed-popular-item">
+        <span class="ed-popular-num">3</span>
+        <div>
+          <h3><a href="#">Binder Jetting Metal: Where It Actually Makes Sense (And Where It Doesn't)</a></h3>
+          <div class="ed-popular-meta">8.1K reads</div>
+        </div>
+      </div>
+      <div class="ed-popular-item">
+        <span class="ed-popular-num">4</span>
+        <div>
+          <h3><a href="#">316L Surface Roughness: Comparing 12 Post-Processing Methods Head to Head</a></h3>
+          <div class="ed-popular-meta">7.3K reads</div>
+        </div>
+      </div>
+      <div class="ed-popular-item">
+        <span class="ed-popular-num">5</span>
+        <div>
+          <h3><a href="#">Why Your Metal AM Service Bureau Keeps Missing Tolerances (And How to Fix the RFQ)</a></h3>
+          <div class="ed-popular-meta">6.9K reads</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ad Placeholder -->
+    <div class="ed-sidebar-block" style="text-align:center; color: var(--text-faint); font-size: 0.75rem; padding: 2.5rem 1rem;">
+      <div style="border: 1px dashed var(--border); border-radius: 4px; padding: 2rem 1rem;">
+        Ad Space<br>300×250
+      </div>
+    </div>
+
+    <!-- Network Links -->
+    <div class="ed-sidebar-block">
+      <h4>PrintWire Network</h4>
+      <div class="ed-network-links">
+        <a href="https://metalpowder.co">Metal Powder</a>
+        <a href="https://3dprinttissue.com">Bioprinting</a>
+        <a href="https://3dprintfood.com">Food Printing</a>
+        <a href="https://3dprintceramic.com">Ceramics</a>
+        <a href="https://3dprintcircuitry.com">Electronics</a>
+        <a href="https://3dprintjewelry.com">Jewelry</a>
+        <a href="https://3dprintarchitecture.com">Architecture</a>
+        <a href="https://3dprintpipes.com">Industrial</a>
+        <a href="https://sendcutship.com">Manufacturing</a>
+        <a href="https://dmls3d.com">DMLS3D</a>
+        <a href="https://3dprinttitanium.com">Titanium</a>
+        <a href="https://3dprintsolar.com">Solar</a>
+      </div>
+    </div>
+
+    <!-- Quick Quote CTA -->
+    <div class="ed-sidebar-block" style="background: linear-gradient(135deg, rgba(0,217,255,0.08), rgba(0,168,204,0.04)); border-color: var(--border-accent);">
+      <h4 style="color: var(--accent);">Get a Quote</h4>
+      <p style="font-size: 0.85rem; color: var(--text-dim); margin-bottom: 1rem; line-height: 1.5;">Need metal parts printed? Describe your project and get a response within 24 hours.</p>
+      <a href="contact.html" style="display:block;text-align:center;padding:0.65rem;background:var(--accent);border-radius:4px;color:#000;font-weight:600;font-size:0.8rem;transition:background 0.25s;" onmouseover="this.style.background='var(--accent-dark)'" onmouseout="this.style.background='var(--accent)'">Request Quote</a>
+    </div>
+
+  </aside>
+</div>
+
+<!-- ── Footer ─────────────────────────────────── -->
+<footer class="ed-footer">
+  <div class="ed-footer-inner">
+    <div class="ed-footer-brand">
+      <div class="ed-logo" style="font-size:1.3rem; margin-bottom: 0.5rem;">3D<span class="ed-logo-accent">PRINT</span>METAL</div>
+      <p>The authoritative source for metal additive manufacturing news, materials research, and service bureau intelligence. Part of the PrintWire network — 194 sites covering every vertical in 3D printing.</p>
+    </div>
+    <div>
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="index.html">News</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Services</h4>
+      <ul>
+        <li><a href="services.html">DMLS / SLM</a></li>
+        <li><a href="services.html">Rapid Prototyping</a></li>
+        <li><a href="services.html">Post-Processing</a></li>
+        <li><a href="advertise.html">Advertise With Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Coverage</h4>
+      <ul>
+        <li><a href="#">Aerospace</a></li>
+        <li><a href="#">Medical</a></li>
+        <li><a href="#">Automotive</a></li>
+        <li><a href="#">Industrial</a></li>
+        <li><a href="#">Materials</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ed-footer-bottom">
+    <span>&copy; 2026 3D PRINTMETAL. Part of the <a href="https://3dprint.space" style="color:var(--accent);">PrintWire</a> network.</span>
+    <span>
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+// ── Mobile nav toggle ──
+document.querySelector('.ed-nav-toggle')?.addEventListener('click', () => {
+  document.querySelector('.ed-nav').classList.toggle('open');
+});
+
+// ── Theme toggle (light/dark) ──
+(function() {
+  const btn = document.getElementById('themeToggle');
+  const root = document.documentElement;
+
+  function setTheme(theme) {
+    root.setAttribute('data-theme', theme);
+    localStorage.setItem('ed-theme', theme);
+    btn.innerHTML = theme === 'dark' ? '&#9790;' : '&#9728;';
+    btn.title = theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+  }
+
+  // Init: check saved preference, then system preference
+  const saved = localStorage.getItem('ed-theme');
+  if (saved) {
+    setTheme(saved);
+  } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+    setTheme('light');
+  } else {
+    setTheme('dark');
+  }
+
+  btn.addEventListener('click', () => {
+    const current = root.getAttribute('data-theme') || 'dark';
+    setTheme(current === 'dark' ? 'light' : 'dark');
+  });
+})();
+
+// ── RSS News Feed ──
+(function() {
+  var grid = document.getElementById('newsGrid');
+  if (!grid) return;
+
+  var feeds = [
+    { url: 'https://news.google.com/rss/search?q=metal+3d+printing+additive+manufacturing&hl=en-US&gl=US&ceid=US:en', name: 'Google News' },
+    { url: 'https://news.google.com/rss/search?q=DMLS+SLM+metal+printing&hl=en-US&gl=US&ceid=US:en', name: 'Google News' },
+    { url: 'https://news.google.com/rss/search?q=metal+additive+manufacturing+titanium+inconel&hl=en-US&gl=US&ceid=US:en', name: 'Google News' },
+    { url: 'https://www.metal-am.com/feed/', name: 'Metal AM' },
+    { url: 'https://3dprintingindustry.com/feed/', name: '3DPI' }
+  ];
+
+  var api = 'https://api.rss2json.com/v1/api.json?rss_url=';
+  var articles = [];
+  var loaded = 0;
+  var total = feeds.length;
+  var fallbackImgs = [
+    'images/hero-main.png','images/metal-parts.png','images/post-processing.png',
+    'images/dmls-printing.png','images/medical.png','images/metal-powder.png',
+    'images/aerospace.png','images/industrial.png'
+  ];
+
+  var timeout = setTimeout(function() { render(); }, 8000);
+
+  feeds.forEach(function(feed) {
+    fetch(api + encodeURIComponent(feed.url))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.status === 'ok' && data.items) {
+          data.items.forEach(function(item) {
+            articles.push({
+              title: item.title,
+              link: item.link,
+              desc: stripHtml(item.description).substring(0,140) + '…',
+              date: item.pubDate,
+              img: item.thumbnail || (item.enclosure && item.enclosure.link) || '',
+              source: feed.name
+            });
+          });
+        }
+      })
+      .catch(function(){})
+      .then(function() {
+        loaded++;
+        if (loaded === total) { clearTimeout(timeout); render(); }
+      });
+  });
+
+  function stripHtml(html) {
+    var d = document.createElement('div'); d.innerHTML = html;
+    return d.textContent || '';
+  }
+  function esc(s) {
+    var d = document.createElement('div'); d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+
+  function render() {
+    if (!articles.length) {
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--text-faint);">Unable to load news feeds.</div>';
+      return;
+    }
+
+    articles.sort(function(a,b){ return new Date(b.date) - new Date(a.date); });
+    var top = articles.slice(0, 8);
+    var html = '';
+    top.forEach(function(a, i) {
+      var d = new Date(a.date);
+      var ds = d.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
+      var img = a.img || fallbackImgs[i % fallbackImgs.length];
+      var fb = fallbackImgs[(i+1) % fallbackImgs.length];
+      html += '<article class="ed-card" style="cursor:pointer" onclick="window.open(\'' + esc(a.link) + '\',\'_blank\',\'noopener\')">' +
+        '<img class="ed-card-img" src="' + esc(img) + '" alt="" loading="lazy" onerror="this.onerror=null;this.src=\'' + fb + '\'">' +
+        '<div class="ed-card-body">' +
+          '<span class="ed-badge">' + esc(a.source) + '</span>' +
+          '<div class="ed-card-meta">' + ds + '</div>' +
+          '<h3><a href="' + esc(a.link) + '" target="_blank" rel="noopener" onclick="event.stopPropagation()">' + esc(a.title) + '</a></h3>' +
+          '<p class="ed-card-excerpt">' + esc(a.desc) + '</p>' +
+        '</div></article>';
+    });
+    grid.innerHTML = html;
+  }
+})();
+</script>
 </body>
 </html>
