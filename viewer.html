@@ -1,113 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="3D Printmetal - Precision Metal Parts, Printed to Perfection. Advanced metal additive manufacturing for aerospace, medical, and industrial applications.">
-<meta name="keywords" content="3d metal printing, additive manufacturing, DMLS, metal prototyping, precision engineering, max davis, ben stagl, ally reza, chilab, chilab studio, titobi, chicago, manufacturing, functional, 3d, prototype">
-<meta name="author" content="Max Davis, Ben Stagl, Ally Reza - ChiLab Studio">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-<title>3D Viewer — 3D PRINTMETAL</title>
-<style>
-  #viewer-page {
-    display: flex;
-    flex-direction: column;
-    height: calc(100vh - 70px);
-  }
-  #drop-zone {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 24px;
-    border: 2px dashed rgba(255,255,255,0.1);
-    border-radius: 16px;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-    user-select: none;
-  }
-  #drop-zone:hover, #drop-zone.dragover {
-    border-color: var(--accent, #00d4ff);
-    background: rgba(255,255,255,0.03);
-  }
-  .drop-icon { font-size: 56px; margin-bottom: 16px; pointer-events: none; }
-  .drop-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; pointer-events: none; }
-  .drop-sub { font-size: 14px; color: #777; margin-bottom: 24px; pointer-events: none; }
-  .format-badges { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; pointer-events: none; }
-  .format-badge {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 6px; padding: 4px 12px;
-    font-size: 12px; font-weight: 700; color: #888; letter-spacing: 0.05em;
-  }
-  .btn-browse {
-    margin-top: 28px;
-    background: var(--accent-color, #00d4ff);
-    border: none; color: #fff;
-    font-family: inherit; font-size: 15px; font-weight: 700;
-    padding: 12px 32px; border-radius: 8px; cursor: pointer;
-  }
-  #file-input { display: none; }
-  #viewer-canvas {
-    flex: 1; position: relative; display: none; overflow: hidden;
-  }
-  #viewer-canvas canvas { display: block; width: 100% !important; height: 100% !important; }
-  #viewer-filename {
-    position: absolute; top: 12px; left: 16px;
-    font-size: 13px; color: #555; font-weight: 600; pointer-events: none;
-  }
-  .viewer-bar {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 12px 16px;
-    background: linear-gradient(transparent, rgba(0,0,0,0.85));
-  }
-  .controls-hint { font-size: 12px; color: #555; }
-  .btn-new-model {
-    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
-    color: #888; font-family: inherit; font-size: 13px;
-    padding: 6px 16px; border-radius: 6px; cursor: pointer;
-  }
-  .btn-new-model:hover { background: rgba(255,255,255,0.14); color: #fff; }
-  .loading-overlay {
-    position: absolute; inset: 0; display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    background: rgba(0,0,0,0.75); gap: 14px; font-size: 16px; color: #00d4ff;
-  }
-  .progress-bar { width: 220px; height: 3px; background: #1a1a2e; border-radius: 2px; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--accent-color, #00d4ff); width: 0%; transition: width 0.2s; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Upload and view any 3D model instantly — GLB, GLTF, STL, OBJ. Nothing is uploaded to a server.">
+  <title>3D Viewer — 3D PRINTMETAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/editorial.css">
+  <style>
+    #viewer-page {
+      display: flex;
+      flex-direction: column;
+      min-height: calc(100vh - 56px);
+    }
+    #drop-zone {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 1.5rem;
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color var(--transition), background var(--transition);
+      user-select: none;
+      background: var(--bg-card);
+    }
+    #drop-zone:hover, #drop-zone.dragover {
+      border-color: var(--accent);
+      background: var(--bg-card-hover);
+    }
+    .drop-icon { font-size: 56px; margin-bottom: 16px; pointer-events: none; }
+    .drop-title {
+      font-family: var(--font-display); font-size: 1.4rem; font-weight: 600;
+      color: var(--heading); margin-bottom: 8px; pointer-events: none;
+    }
+    .drop-sub { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 24px; pointer-events: none; }
+    .format-badges { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; pointer-events: none; }
+    .format-badge {
+      background: var(--badge-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 4px 12px;
+      font-size: 0.7rem; font-weight: 600;
+      color: var(--accent); letter-spacing: 0.06em;
+    }
+    .btn-browse {
+      margin-top: 28px;
+      background: var(--accent);
+      border: none; color: #000;
+      font-family: var(--font-body); font-size: 0.85rem; font-weight: 600;
+      padding: 0.7rem 2rem; border-radius: var(--radius-sm); cursor: pointer;
+      transition: background var(--transition);
+    }
+    .btn-browse:hover { background: var(--accent-dark); }
+    #file-input { display: none; }
+    #viewer-canvas {
+      flex: 1; position: relative; display: none; overflow: hidden;
+    }
+    #viewer-canvas canvas { display: block; width: 100% !important; height: 100% !important; }
+    #viewer-filename {
+      position: absolute; top: 12px; left: 16px;
+      font-size: 0.8rem; color: var(--text-faint); font-weight: 500; pointer-events: none;
+    }
+    .viewer-bar {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    }
+    [data-theme="light"] .viewer-bar {
+      background: linear-gradient(transparent, rgba(245,246,248,0.85));
+    }
+    .controls-hint { font-size: 0.75rem; color: var(--text-faint); }
+    .btn-new-model {
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--text-dim); font-family: var(--font-body); font-size: 0.8rem;
+      padding: 6px 16px; border-radius: var(--radius-sm); cursor: pointer;
+      transition: all var(--transition);
+    }
+    .btn-new-model:hover { border-color: var(--accent); color: var(--accent); }
+    .loading-overlay {
+      position: absolute; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: rgba(0,0,0,0.7); gap: 14px; font-size: 1rem; color: var(--accent);
+    }
+    [data-theme="light"] .loading-overlay { background: rgba(245,246,248,0.8); }
+    .progress-bar { width: 220px; height: 3px; background: var(--bg-card); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--accent); width: 0%; transition: width 0.2s; }
+  </style>
 </head>
 <body>
 
-<header class="site-header">
-        <nav class="navbar">
-            <div class="nav-container">
-                <a href="index.html" class="nav-logo">
-                    <span class="logo-bracket">[</span><span class="logo-text">3D PRINTMETAL</span><span class="logo-bracket">]</span>
-                </a>
-                <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-                    <span class="hamburger"></span>
-                    <span class="hamburger"></span>
-                    <span class="hamburger"></span>
-                </button>
-                <ul class="nav-menu">
-                    <li><a href="index.html" class="nav-link">Home</a></li>
-                    <li><a href="about.html" class="nav-link">About</a></li>
-                    <li><a href="services.html" class="nav-link">Services</a></li>
-                    <li><a href="contact.html" class="nav-link">Contact</a></li>
-                    <li><a href="advertise.html" class="nav-link">Advertise</a></li>
-                    <li><a href="viewer.html" class="nav-link active">3D Viewer</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+<!-- Header -->
+<header class="ed-header">
+  <div class="ed-header-inner">
+    <a href="index.html" class="ed-logo">3D<span class="ed-logo-accent">PRINT</span>METAL</a>
+    <button class="ed-nav-toggle" aria-label="Menu" onclick="document.querySelector('.ed-nav').classList.toggle('open')">&#9776;</button>
+    <nav class="ed-nav">
+      <a href="index.html">News</a>
+      <a href="services.html">Services</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="advertise.html">Advertise</a>
+      <a href="viewer.html" class="active">3D Viewer</a>
+    </nav>
+    <button class="ed-theme-toggle" id="themeToggle" aria-label="Toggle light/dark mode">&#9790;</button>
+  </div>
+</header>
 
-<main id="main-content">
+<!-- Breadcrumbs -->
+<div class="ed-breadcrumbs">
+  <a href="index.html">Home</a> <span>/</span> 3D Viewer
+</div>
+
+<!-- Viewer -->
 <div id="viewer-page">
   <div id="drop-zone">
     <div class="drop-icon">📦</div>
@@ -129,54 +139,59 @@
       <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
     </div>
     <div class="viewer-bar">
-      <span class="controls-hint">🖱️ Drag to rotate · Scroll to zoom · Right-click to pan</span>
+      <span class="controls-hint">Drag to rotate · Scroll to zoom · Right-click to pan</span>
       <button class="btn-new-model" id="btn-new">Load New Model</button>
     </div>
   </div>
 </div>
-</main>
 
-<footer class="site-footer">
-        <div class="footer-container">
-            <div class="footer-main">
-                <div class="footer-brand">
-                    <div class="footer-logo">3D PRINTMETAL</div>
-                    <p>Precision Metal Parts, Printed to Perfection</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Company</h4>
-                        <ul>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Services</h4>
-                        <ul>
-                            <li><a href="services.html">DMLS / SLM Printing</a></li>
-                            <li><a href="services.html">Rapid Prototyping</a></li>
-                            <li><a href="services.html">Post-Processing</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Contact</h4>
-                        <ul>
-                            <li><a href="contact.html">Contact Us</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 3D PRINTMETAL. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+<!-- Footer -->
+<footer class="ed-footer" style="margin-top:0;">
+  <div class="ed-footer-inner">
+    <div class="ed-footer-brand">
+      <div class="ed-logo" style="font-size:1.3rem;margin-bottom:0.5rem;">3D<span class="ed-logo-accent">PRINT</span>METAL</div>
+      <p>The authoritative source for metal additive manufacturing news, materials research, and service bureau intelligence. Part of the PrintWire network.</p>
+    </div>
+    <div><h4>Navigation</h4><ul><li><a href="index.html">News</a></li><li><a href="services.html">Services</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+    <div><h4>Services</h4><ul><li><a href="services.html">DMLS / SLM</a></li><li><a href="services.html">Rapid Prototyping</a></li><li><a href="services.html">Post-Processing</a></li><li><a href="advertise.html">Advertise With Us</a></li></ul></div>
+    <div><h4>Coverage</h4><ul><li><a href="#">Aerospace</a></li><li><a href="#">Medical</a></li><li><a href="#">Automotive</a></li><li><a href="#">Industrial</a></li><li><a href="#">Materials</a></li></ul></div>
+  </div>
+  <div class="ed-footer-bottom">
+    <span>&copy; 2026 3D PRINTMETAL. Part of the <a href="https://3dprint.space" style="color:var(--accent);">PrintWire</a> network.</span>
+    <span><a href="#">Privacy</a><a href="#">Terms</a></span>
+  </div>
+</footer>
 
-<script src="js/main.js"></script>
+<!-- Theme toggle -->
+<script>
+(function() {
+  var btn = document.getElementById('themeToggle');
+  var root = document.documentElement;
+  function setTheme(t) {
+    root.setAttribute('data-theme', t);
+    localStorage.setItem('ed-theme', t);
+    btn.innerHTML = t === 'dark' ? '&#9790;' : '&#9728;';
+  }
+  var s = localStorage.getItem('ed-theme');
+  if (s) setTheme(s);
+  else if (window.matchMedia('(prefers-color-scheme: light)').matches) setTheme('light');
+  else setTheme('dark');
+  btn.addEventListener('click', function() {
+    setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    // Update 3D scene background on theme change
+    if (window._updateSceneBg) window._updateSceneBg();
+  });
+})();
+</script>
+
+<!-- Three.js viewer -->
 <script type="importmap">
-{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/"}}
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.162.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/"
+  }
+}
 </script>
 <script type="module">
 import * as THREE from 'three';
@@ -187,63 +202,214 @@ import { STLLoader } from 'three/addons/loaders/STLLoader.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
-const dropZone=document.getElementById('drop-zone'),fileInput=document.getElementById('file-input'),canvasEl=document.getElementById('viewer-canvas'),loadingOverlay=document.getElementById('loading-overlay'),loadingText=document.getElementById('loading-text'),progressFill=document.getElementById('progress-fill'),filenameEl=document.getElementById('viewer-filename');
-const bgColor=getComputedStyle(document.documentElement).getPropertyValue('--bg-dark').trim()||'#0a0a0f';
-const primaryColor=getComputedStyle(document.documentElement).getPropertyValue('--accent-color').trim()||'#00d4ff';
-const scene=new THREE.Scene();
-scene.background=new THREE.Color(bgColor);
-scene.fog=new THREE.Fog(bgColor,20,80);
-const camera=new THREE.PerspectiveCamera(50,1,0.001,2000);
-camera.position.set(4,2.5,4);
-const renderer=new THREE.WebGLRenderer({antialias:true});
-renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-renderer.toneMapping=THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure=1.4;
-renderer.outputColorSpace=THREE.SRGBColorSpace;
-canvasEl.appendChild(renderer.domElement);
-const pmrem=new THREE.PMREMGenerator(renderer);
-scene.environment=pmrem.fromScene(new RoomEnvironment(),0.04).texture;
-pmrem.dispose();
-const controls=new OrbitControls(camera,renderer.domElement);
-controls.enableDamping=true;controls.dampingFactor=0.05;controls.autoRotate=true;controls.autoRotateSpeed=1.5;controls.minDistance=0.01;controls.maxDistance=1000;
-scene.add(new THREE.AmbientLight(0xffffff,1.5));
-const d1=new THREE.DirectionalLight(0xffffff,3);d1.position.set(5,10,5);scene.add(d1);
-const d2=new THREE.DirectionalLight(0xffffff,2);d2.position.set(-5,5,-5);scene.add(d2);
-const p1=new THREE.PointLight(new THREE.Color(primaryColor),2,100);p1.position.set(-3,2,0);scene.add(p1);
-const p2=new THREE.PointLight(0x7b2ff7,2,100);p2.position.set(3,-1,2);scene.add(p2);
-scene.add(new THREE.GridHelper(40,80,0x222244,0x111122));
-const dracoLoader=new DRACOLoader();dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/libs/draco/');
-const gltfLoader=new GLTFLoader();gltfLoader.setDRACOLoader(dracoLoader);
-const stlLoader=new STLLoader(),objLoader=new OBJLoader();
-const defaultMat=new THREE.MeshStandardMaterial({color:new THREE.Color(primaryColor).lerp(new THREE.Color(0xffffff),0.4),roughness:0.35,metalness:0.7,side:THREE.DoubleSide});
-let currentModel=null;
-function clearModel(){if(currentModel){scene.remove(currentModel);currentModel=null;}}
-function fitToScene(o){const box=new THREE.Box3().setFromObject(o),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3()),maxDim=Math.max(size.x,size.y,size.z)||1,scale=2.5/maxDim;o.position.copy(center).multiplyScalar(-scale);o.scale.setScalar(scale);camera.position.set(4,2.5,4);controls.target.set(0,0,0);controls.update();}
-function fixGLTF(o){o.traverse(c=>{if(!c.isMesh)return;const mats=Array.isArray(c.material)?c.material:[c.material];mats.forEach((m,i)=>{if(m.isMeshBasicMaterial){const r=new THREE.MeshStandardMaterial({color:m.color,map:m.map,roughness:0.5,metalness:0.1,side:THREE.DoubleSide});Array.isArray(c.material)?c.material[i]=r:c.material=r;}else{m.side=THREE.DoubleSide;if(m.envMapIntensity!==undefined)m.envMapIntensity=2;m.needsUpdate=true;}});}));}
-function addToScene(o){clearModel();fitToScene(o);scene.add(o);currentModel=o;loadingOverlay.style.display='none';}
-function onProg(x){if(x.total){const p=Math.round(x.loaded/x.total*100);loadingText.textContent=`Loading… ${p}%`;progressFill.style.width=p+'%';}}
-function onErr(e){loadingText.textContent='Error loading file.';console.error(e);}
-function loadFile(file){
-  const ext=file.name.split('.').pop().toLowerCase();
-  if(!['glb','gltf','stl','obj'].includes(ext)){alert(`Unsupported format "${ext}"`);return;}
-  const url=URL.createObjectURL(file);
-  dropZone.style.display='none';canvasEl.style.display='block';
-  filenameEl.textContent=file.name;loadingOverlay.style.display='flex';
-  loadingText.textContent='Loading model…';progressFill.style.width='0%';resizeRenderer();
-  if(ext==='glb'||ext==='gltf'){gltfLoader.load(url,g=>{fixGLTF(g.scene);addToScene(g.scene);URL.revokeObjectURL(url);},onProg,onErr);}
-  else if(ext==='stl'){stlLoader.load(url,geo=>{geo.computeVertexNormals();const m=new THREE.Mesh(geo,defaultMat.clone()),g=new THREE.Group();g.add(m);addToScene(g);URL.revokeObjectURL(url);},onProg,onErr);}
-  else if(ext==='obj'){objLoader.load(url,o=>{o.traverse(c=>{if(c.isMesh)c.material=defaultMat.clone();});addToScene(o);URL.revokeObjectURL(url);},onProg,onErr);}
+const dropZone = document.getElementById('drop-zone');
+const fileInput = document.getElementById('file-input');
+const canvasEl = document.getElementById('viewer-canvas');
+const loadingOverlay = document.getElementById('loading-overlay');
+const loadingText = document.getElementById('loading-text');
+const progressFill = document.getElementById('progress-fill');
+const filenameEl = document.getElementById('viewer-filename');
+
+function getBgColor() {
+  return getComputedStyle(document.documentElement).getPropertyValue('--bg').trim() || '#08090f';
 }
-document.getElementById('btn-browse').addEventListener('click',e=>{e.stopPropagation();fileInput.click();});
-dropZone.addEventListener('click',()=>fileInput.click());
-fileInput.addEventListener('change',e=>{if(e.target.files[0])loadFile(e.target.files[0]);});
-dropZone.addEventListener('dragover',e=>{e.preventDefault();dropZone.classList.add('dragover');});
-dropZone.addEventListener('dragleave',()=>dropZone.classList.remove('dragover'));
-dropZone.addEventListener('drop',e=>{e.preventDefault();dropZone.classList.remove('dragover');if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0]);});
-document.getElementById('btn-new').addEventListener('click',()=>{clearModel();canvasEl.style.display='none';dropZone.style.display='flex';fileInput.value='';});
-function resizeRenderer(){const w=canvasEl.clientWidth,h=canvasEl.clientHeight;renderer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();}
-window.addEventListener('resize',resizeRenderer);
-function animate(){requestAnimationFrame(animate);p1.intensity=2+Math.sin(Date.now()*0.002)*0.5;p2.intensity=2+Math.cos(Date.now()*0.002)*0.5;controls.update();renderer.render(scene,camera);}
+function getAccent() {
+  return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#00a8cc';
+}
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(getBgColor());
+scene.fog = new THREE.Fog(getBgColor(), 20, 80);
+
+// Expose for theme toggle callback
+window._updateSceneBg = function() {
+  const c = getBgColor();
+  scene.background = new THREE.Color(c);
+  scene.fog.color = new THREE.Color(c);
+};
+
+const camera = new THREE.PerspectiveCamera(50, 1, 0.001, 2000);
+camera.position.set(4, 2.5, 4);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.4;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+canvasEl.appendChild(renderer.domElement);
+
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+pmrem.dispose();
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.autoRotate = true;
+controls.autoRotateSpeed = 1.5;
+controls.minDistance = 0.01;
+controls.maxDistance = 1000;
+
+scene.add(new THREE.AmbientLight(0xffffff, 1.5));
+const d1 = new THREE.DirectionalLight(0xffffff, 3);
+d1.position.set(5, 10, 5);
+scene.add(d1);
+const d2 = new THREE.DirectionalLight(0xffffff, 2);
+d2.position.set(-5, 5, -5);
+scene.add(d2);
+const p1 = new THREE.PointLight(new THREE.Color(getAccent()), 2, 100);
+p1.position.set(-3, 2, 0);
+scene.add(p1);
+const p2 = new THREE.PointLight(0x7b2ff7, 2, 100);
+p2.position.set(3, -1, 2);
+scene.add(p2);
+scene.add(new THREE.GridHelper(40, 80, 0x222244, 0x111122));
+
+const dracoLoader = new DRACOLoader();
+dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.162.0/examples/jsm/libs/draco/');
+const gltfLoader = new GLTFLoader();
+gltfLoader.setDRACOLoader(dracoLoader);
+const stlLoader = new STLLoader();
+const objLoader = new OBJLoader();
+
+const defaultMat = new THREE.MeshStandardMaterial({
+  color: new THREE.Color(getAccent()).lerp(new THREE.Color(0xffffff), 0.4),
+  roughness: 0.35, metalness: 0.7, side: THREE.DoubleSide,
+});
+
+let currentModel = null;
+
+function clearModel() {
+  if (currentModel) { scene.remove(currentModel); currentModel = null; }
+}
+
+function fitToScene(obj) {
+  const box = new THREE.Box3().setFromObject(obj);
+  const size = box.getSize(new THREE.Vector3());
+  const center = box.getCenter(new THREE.Vector3());
+  const maxDim = Math.max(size.x, size.y, size.z) || 1;
+  const scale = 2.5 / maxDim;
+  obj.position.copy(center).multiplyScalar(-scale);
+  obj.scale.setScalar(scale);
+  camera.position.set(4, 2.5, 4);
+  controls.target.set(0, 0, 0);
+  controls.update();
+}
+
+function fixGLTF(obj) {
+  obj.traverse((child) => {
+    if (!child.isMesh) return;
+    const mats = Array.isArray(child.material) ? child.material : [child.material];
+    mats.forEach((mat, i) => {
+      if (mat.isMeshBasicMaterial) {
+        const r = new THREE.MeshStandardMaterial({
+          color: mat.color, map: mat.map,
+          roughness: 0.5, metalness: 0.1, side: THREE.DoubleSide,
+        });
+        if (Array.isArray(child.material)) child.material[i] = r;
+        else child.material = r;
+      } else {
+        mat.side = THREE.DoubleSide;
+        if (mat.envMapIntensity !== undefined) mat.envMapIntensity = 2;
+        mat.needsUpdate = true;
+      }
+    });
+  });
+}
+
+function addToScene(obj) {
+  clearModel();
+  fitToScene(obj);
+  scene.add(obj);
+  currentModel = obj;
+  loadingOverlay.style.display = 'none';
+}
+
+function onProgress(xhr) {
+  if (xhr.total) {
+    const pct = Math.round(xhr.loaded / xhr.total * 100);
+    loadingText.textContent = `Loading… ${pct}%`;
+    progressFill.style.width = pct + '%';
+  }
+}
+
+function onError(err) {
+  loadingText.textContent = 'Error loading file.';
+  console.error(err);
+}
+
+function loadFile(file) {
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!['glb','gltf','stl','obj'].includes(ext)) {
+    alert(`Unsupported format ".${ext}"`);
+    return;
+  }
+  const url = URL.createObjectURL(file);
+  dropZone.style.display = 'none';
+  canvasEl.style.display = 'block';
+  filenameEl.textContent = file.name;
+  loadingOverlay.style.display = 'flex';
+  loadingText.textContent = 'Loading model…';
+  progressFill.style.width = '0%';
+  resizeRenderer();
+
+  if (ext === 'glb' || ext === 'gltf') {
+    gltfLoader.load(url, (gltf) => {
+      fixGLTF(gltf.scene); addToScene(gltf.scene); URL.revokeObjectURL(url);
+    }, onProgress, onError);
+  } else if (ext === 'stl') {
+    stlLoader.load(url, (geo) => {
+      geo.computeVertexNormals();
+      const mesh = new THREE.Mesh(geo, defaultMat.clone());
+      const group = new THREE.Group();
+      group.add(mesh);
+      addToScene(group);
+      URL.revokeObjectURL(url);
+    }, onProgress, onError);
+  } else if (ext === 'obj') {
+    objLoader.load(url, (obj) => {
+      obj.traverse((c) => { if (c.isMesh) c.material = defaultMat.clone(); });
+      addToScene(obj);
+      URL.revokeObjectURL(url);
+    }, onProgress, onError);
+  }
+}
+
+// Events
+document.getElementById('btn-browse').addEventListener('click', (e) => {
+  e.stopPropagation(); fileInput.click();
+});
+dropZone.addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', (e) => {
+  if (e.target.files[0]) loadFile(e.target.files[0]);
+});
+dropZone.addEventListener('dragover', (e) => {
+  e.preventDefault(); dropZone.classList.add('dragover');
+});
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault(); dropZone.classList.remove('dragover');
+  if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+});
+document.getElementById('btn-new').addEventListener('click', () => {
+  clearModel(); canvasEl.style.display = 'none'; dropZone.style.display = 'flex'; fileInput.value = '';
+});
+
+function resizeRenderer() {
+  const w = canvasEl.clientWidth, h = canvasEl.clientHeight;
+  renderer.setSize(w, h);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+}
+window.addEventListener('resize', resizeRenderer);
+
+function animate() {
+  requestAnimationFrame(animate);
+  p1.intensity = 2 + Math.sin(Date.now() * 0.002) * 0.5;
+  p2.intensity = 2 + Math.cos(Date.now() * 0.002) * 0.5;
+  controls.update();
+  renderer.render(scene, camera);
+}
 animate();
 </script>
 </body>
